@@ -1134,12 +1134,19 @@ class Social {
    *  show their sorted order according to the primary criterion
    */
   getGraph() {
+    console.log("HERE");
+
     if (this.state.cache.graph !== null) {
       return this.state.cache.graph;
     }
 
-    let nodes = this.getPeople().getNodes();
-    nodes = nodes.concat(this.getBusinesses().getNodes());
+    console.log("GET NODES");
+    console.log(this.getPeople(false));
+
+    let nodes = this.getPeople(false).getNodes();
+    nodes = nodes.concat(this.getBusinesses(false).getNodes());
+
+    console.log(nodes);
 
     // create a dictionary so we know which nodes are selected
     let n = {};
@@ -1148,7 +1155,7 @@ class Social {
     }
 
     // get only the edges that involve these nodes
-    let edges = this.getConnections().getEdges(n);
+    let edges = this.getConnections(false).getEdges(n);
 
     // let each node know how many connections it has got
     let counts = {};

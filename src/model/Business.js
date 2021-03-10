@@ -254,6 +254,7 @@ class Business {
   }
 
   getWeight(project_id = null) {
+    return 5.0;
     if (project_id === null) {
       // use the first project's weight
       project_id = Object.keys(this.state.weight)[0];

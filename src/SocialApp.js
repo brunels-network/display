@@ -80,43 +80,21 @@ class SocialApp extends React.Component {
     };
 
 
-    Object.keys(imageData).forEach((key) => {
-      social.setImage(key, imageData[key][0], imageData[key][1]);
-    });
+    try {
+      Object.keys(imageData).forEach((key) => {
+        social.setImage(key, imageData[key][0], imageData[key][1]);
+     });
+    } catch (error) {
+      console.log("CANNOT ADD IMAGE!");
+      console.log(error);
+    }
 
-    const ssGW = social.getProjects().getByName("SS Great Western");
-    this.state.selectedShip = ssGW.getName();
-    this.state.selectedShipID = ssGW.getID();
+    console.log(social);
 
-    const ssGB = social.getProjects().getByName("SS Great Britain");
-    const ssGE = social.getProjects().getByName("SS Great Eastern");
-
-    fetch(gw_text)
-      .then(r => r.text())
-      .then(text => {
-        social.setProjectText(ssGW, text)
-    });
-
-    fetch(gb_text)
-      .then(r => r.text())
-      .then(text => {
-        social.setProjectText(ssGB, text)
-    });
-
-    fetch(ge_text)
-      .then(r => r.text())
-      .then(text => {
-        social.setProjectText(ssGE, text)
-    });
-
-    fetch(help_text)
-      .then(r => r.text())
-      .then(text => {
-        social.setHelpText(text)
-    });
+    const gwr = social.getProjects().getByName("GWR");
 
     // make sure that we start showing only the Great Western
-    this.state.social.toggleFilter(ssGW);
+    this.state.social.toggleFilter(gwr);
 
     this.spiralOrders = Object.freeze({
       Connections: score_by_connections,
@@ -646,13 +624,7 @@ class SocialApp extends React.Component {
       />
     );
 
-    let ship_button = (
-      <ShipSelector
-        projects={this.state.social.getProjects()}
-        emitSetShip={(item) => this.slotSetShip(item)}
-        emitShowShip={(item) => this.slotShowShip(item)}
-      />
-    );
+    let ship_button = null;
 
     let size_button = (
       <LabelButton

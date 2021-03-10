@@ -415,15 +415,6 @@ class Person {
     }
   }
 
-  getWeight(project_id = null) {
-    if (project_id === null) {
-      // return the first project weight
-      project_id = Object.keys(this.state.weight)[0];
-    }
-
-    return this.state.weight[project_id];
-  }
-
   getProjectID() {
     // return the first matching project ID
     return Object.keys(this.state.projects)[0];
@@ -466,8 +457,8 @@ class Person {
     return this.state.is_highlighted;
   }
 
-
   getWeight(project_id = null) {
+    return 5.0;
     if (project_id === null) {
       // return the first project weight
       project_id = Object.keys(this.state.weight)[0];
@@ -477,6 +468,7 @@ class Person {
   }
 
   isEngineer(project_id = null) {
+    return true;
     if (project_id === null) {
       project_id = Object.keys(this.state.positions)[0];
     }
@@ -497,6 +489,7 @@ class Person {
   }
 
   isNonContributingEngineer(project_id = null) {
+    return false;
     if (project_id === null) {
       // return this status with the first project
       project_id = Object.keys(this.state.positions)[0];
