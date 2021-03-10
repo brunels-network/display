@@ -13,6 +13,7 @@ __all__ = [
     "importType",
     "importNotes",
     "importProject",
+    "importDate",
     "importSource",
     "importBiography",
     "importEdgeSources",
@@ -701,6 +702,17 @@ def importSource(data, importers=None):
     return _Source(props)
 
 
+def importDate(data, importers=None):
+    from ._keydate import KeyDate as _KeyDate
+
+    props = {
+        "name": _clean_string(data.Date),
+        "description": _clean_string(data.Text),
+    }
+
+    return _KeyDate(props)
+
+
 def importProject(data, importers=None):
     from ._project import Project as _Project
 
@@ -811,6 +823,7 @@ def getDefaultImporters():
         "importType": importType,
         "importSource": importSource,
         "importProject": importProject,
+        "importDate": importDate,
         "importBiography": importBiography,
         "importEdgeSources": importEdgeSources,
         "importSharedLinks": importSharedLinks,

@@ -63,7 +63,7 @@ def _get_modifiers(modifiers, name=None):
         modifiers = {name: modifiers}
 
     for key in ["person", "business", "connection", "project",
-                "source", "biography"]:
+                "source", "biography", "date"]:
         if key not in modifiers:
             modifiers[key] = lambda item: item
 
@@ -83,6 +83,7 @@ class Social:
         from ._projects import Projects as _Projects
         from ._notes import Notes as _Notes
         from ._biographies import Biographies as _Biographies
+        from ._keydates import KeyDates as _KeyDates
 
         self.state = {
             "people": _People(getHook=self.get),
@@ -94,6 +95,7 @@ class Social:
             "projects": _Projects(getHook=self.get),
             "notes": _Notes(getHook=self.get),
             "biographies": _Biographies(getHook=self.get),
+            "keydates": _KeyDates(getHook=self.get),
         }
 
     def people(self):
@@ -117,6 +119,9 @@ class Social:
     def projects(self):
         return self.state["projects"]
 
+    def keyDates(self):
+        return self.state["keydates"]
+
     def notes(self):
         return self.state["notes"]
 
@@ -138,8 +143,30 @@ class Social:
             return self.sources().get(id)
         elif id.startswith("N"):
             return self.notes().get(id)
+        elif id.startswith("K"):
+            return self.keyDates().get(id)
         else:
             return id
+
+    def load_dates(self, dates_filepath, importers=None, modifiers=None,
+                   sheet_name=0):
+        """Load all of the dates to view, with their descriptions"""
+        data = _read_data(dates_filepath, sheet_name=sheet_name)
+
+        importers = _get_importers(importers)
+        modifiers = _get_modifiers(modifiers, "date")
+
+        dates = self.keyDates()
+
+        for _, date in data.iterrows():
+            # Get the import function
+            import_date = importers["importDate"]
+
+            date = import_date(date, importers=importers)
+
+            if date:
+                date = modifiers["date"](date)
+                dates.add(date)
 
     def load_projects(self, projects_filepath, importers=None, modifiers=None,
                       sheet_name=0):

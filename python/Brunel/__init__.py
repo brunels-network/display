@@ -17,6 +17,8 @@ from ._project import *
 from ._projects import *
 from ._social import *
 from ._daterange import *
+from ._keydate import *
+from ._keydates import *
 from ._dry import *
 from ._load_images import *
 from ._export import export_object, export_to_json, export_all, copy_all
