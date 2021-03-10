@@ -1,7 +1,7 @@
 {
   "name": "brunel",
   "version": "0.1.0",
-  "homepage": "http://brunels-network.github.io/network/",
+  "homepage": "http://chryswoods.github.io/brunels_display/",
   "private": true,
   "dependencies": {
     "@brainhubeu/react-carousel": "^1.15.4",

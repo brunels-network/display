@@ -243,13 +243,13 @@ def importPerson(node, project, importers=None):
         name = str(node.Label)
         state = extractPersonName(name)
 
-        state["positions"] = {pid: importPositions(node, importers=importers)}
-        state["sources"] = {pid: importSources(node, importers=importers)}
-        state["affiliations"] = {pid: importAffiliations(node, importers=importers)}
-        state["notes"] = {pid: importNotes(node, importers=importers)}
-        state["projects"] = {pid: importProjectDates(node, importers=importers)}
-        state["weight"] = {pid: importWeights(node, importers=importers)}
-        state["highlight"] = {pid: importHighlights(node, importers=importers)}
+        #state["positions"] = {pid: importPositions(node, importers=importers)}
+        #state["sources"] = {pid: importSources(node, importers=importers)}
+        #state["affiliations"] = {pid: importAffiliations(node, importers=importers)}
+        #state["notes"] = {pid: importNotes(node, importers=importers)}
+        #state["projects"] = {pid: importProjectDates(node, importers=importers)}
+        #state["weight"] = {pid: importWeights(node, importers=importers)}
+        #state["highlight"] = {pid: importHighlights(node, importers=importers)}
 
         return _Person(state)
     except Exception as e:
@@ -332,14 +332,14 @@ def importBusiness(node, project, importers=None):
     try:
         state = {}
         state["name"] = str(node.Label)
-        state["positions"] = {pid: importPositions(node, importers=importers)}
-        state["sources"] = {pid: importSources(node, importers=importers)}
-        state["affiliations"] = {pid: importAffiliations(node, importers=importers)}
-        state["notes"] = {pid: importNotes(node, importers=importers)}
-        state["weight"] = {pid: importWeights(node, importers=importers)}
-        state["positions"] = {pid: importPositions(node, importers=importers)}
-        state["projects"] = {pid: _DateRange.null()}
-        state["highlight"] = {pid: importHighlights(node, importers=importers)}
+        #state["positions"] = {pid: importPositions(node, importers=importers)}
+        #state["sources"] = {pid: importSources(node, importers=importers)}
+        #state["affiliations"] = {pid: importAffiliations(node, importers=importers)}
+        #state["notes"] = {pid: importNotes(node, importers=importers)}
+        #state["weight"] = {pid: importWeights(node, importers=importers)}
+        #state["positions"] = {pid: importPositions(node, importers=importers)}
+        #state["projects"] = {pid: _DateRange.null()}
+        #state["highlight"] = {pid: importHighlights(node, importers=importers)}
 
         from ._business import Business as _Business
 
@@ -502,11 +502,11 @@ def importConnection(edge, project, mapping=None, importers=None):
         if n1 is None:
             raise KeyError(f"Unspecified n1 {n0} <=> {n1}")
 
-        notes = importNotes(edge, importers=importers, isEdge=True)
-        (duration, asources, csources) = importEdgeSources(edge, importers=importers)
+        #notes = importNotes(edge, importers=importers, isEdge=True)
+        #(duration, asources, csources) = importEdgeSources(edge, importers=importers)
 
-        typ = importType(edge, importers=importers)
-        shared_links = importSharedLinks(edge, importers=importers)
+        #typ = importType(edge, importers=importers)
+        #shared_links = importSharedLinks(edge, importers=importers)
 
         from ._connection import Connection as _Connection
 
@@ -514,14 +514,14 @@ def importConnection(edge, project, mapping=None, importers=None):
             {
                 "n0": n0,
                 "n1": n1,
-                "notes": notes,
-                "affiliations": asources,
-                "correspondences": csources,
-                "duration": duration,
-                "shared": shared_links,
+                #"notes": notes,
+                #"affiliations": asources,
+                #"correspondences": csources,
+                #"duration": duration,
+                #"shared": shared_links,
                 "projects": {project.getID(): _DateRange.null()},
                 "weights": {project.getID(): 1.0},
-                "type": typ,
+                #"type": typ,
             }
         )
 

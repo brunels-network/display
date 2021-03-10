@@ -105,7 +105,10 @@ class Connection:
         for id, project in other.state["projects"].items():
             state["projects"][id] = project
 
-        state["duration"] = state["duration"].merge(other.state["duration"])
+        try:
+            state["duration"] = state["duration"].merge(other.state["duration"])
+        except Exception:
+            pass
 
         m = Connection()
         m.state = state
