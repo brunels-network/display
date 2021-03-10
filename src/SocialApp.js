@@ -558,46 +558,6 @@ class SocialApp extends React.Component {
   }
 
   render() {
-    let menu = (
-      <TextButton
-        onClick={() => {
-          this.slotShowMenu();
-        }}
-      >
-        Options
-      </TextButton>
-    );
-
-    let search = (
-      <SearchBar
-        emitUpdate={(text) => {
-          this.slotUpdateSearch(text);
-        }}
-        emitSearchHighlightToggled={(toggled) => {
-          this.slotSearchHighlightToggled(toggled);
-        }}
-        searchText={this.state.searchText}
-        searchHighlightToggled={this.state.searchHighlightLinks}
-        searchHighlightAvailable={!this.state.searchWasItem}
-      />
-    );
-
-    let help = (
-      <TextButton
-        onClick={() => {
-          this.setOverlay(
-            <HowDoIOverlay
-              social={this.state.social}
-              close={() => {
-                this.closeOverlay();
-              }}
-            />
-          );
-        }}
-      >
-        Info
-      </TextButton>
-    );
 
     let graph = (
       <ForceGraph
@@ -614,207 +574,23 @@ class SocialApp extends React.Component {
       />
     );
 
-    let spiral_button = (
-      <LabelButton
-        label="Spiral Order"
-        button={this.state.spiralOrder}
-        onClick={() => {
-          this.toggleSpiralOrder();
-        }}
-      />
-    );
-
-    let ship_button = null;
-
-    let size_button = (
-      <LabelButton
-        label="Node Size"
-        button={this.state.nodeSize}
-        onClick={() => {
-          this.toggleNodeSize();
-        }}
-      />
-    );
-
-    let filter_text = "None";
-
-    if (this.state.commercialFiltered) {
-      filter_text = "Commercial";
-    } else if (this.state.engineersFiltered) {
-      filter_text = "Engineers";
-    }
-
-    let filter_button = (
-      <LabelButton
-        label="Filter"
-        button={filter_text}
-        onClick={() => {
-          this.toggleEngCommFilter();
-        }}
-      />
-    );
-
-    let unconnected_button = (
-      <LabelButton
-        label="Unconnected"
-        button={this.state.filterUnconnectedNodes ? "Invisible" : "Visible"}
-        onClick={() => {
-          this.slotToggleUnconnectedNodes();
-        }}
-      />
-    );
-
-    let noncontrib_button = (
-      <LabelButton
-        label="Non-contributers"
-        button={this.state.filterNCEngineers ? "Invisible" : "Visible"}
-        onClick={() => {
-          this.slotToggleNonContributingEngineers();
-        }}
-      />
-    );
-
-    let search_text = this.state.searchIncludeBios ? "Biographies" : "Names";
-
-    let toggle_search = () => {
-      this.slotSearchBiosToggled(!this.state.searchIncludeBios);
-    };
-
-    let search_button = (
-      <LabelButton
-        label="Search"
-        button={search_text}
-        onClick={toggle_search}
-      />
-    );
-
-    let overlay = null;
-    if (this.state.isOverlayOpen) {
-      overlay = (
-        <Overlay
-          toggleOverlay={() => {
-            this.toggleOverlay();
-          }}
-        >
-          {this.state.overlayItem}
-        </Overlay>
-      );
-    }
-
     let left_side = null;
     let right_side = null;
 
-    if (this.state.width > 900) {
-      left_side = (
-        <HBox>
-          {spiral_button}
-          {filter_button}
-          {search_button}
-        </HBox>
-      );
-
-      right_side = (
-        <HBox>
-          {unconnected_button}
-          {noncontrib_button}
-          {size_button}
-        </HBox>
-      );
-    } else if (this.state.width > 700) {
-      left_side = (
-        <HBox>
-          {spiral_button}
-          {filter_button}
-        </HBox>
-      );
-
-      right_side = (
-        <HBox>
-          {noncontrib_button}
-          {size_button}
-        </HBox>
-      );
-    } else if (this.state.width > 550) {
-      left_side = spiral_button;
-      right_side = size_button;
-    }
-
-    let mainmenu = (
-      <SlidingPanel isOpen={this.state.menuVisible}
-        position="left" height="100%" width="10em">
-        <MainMenu
-          close={() => {
-            this.slotCloseMenu();
-          }}
-          spiralOrder={this.state.spiralOrder}
-          filterText={filter_text}
-          sizeText={this.state.nodeSize}
-          searchText={search_text}
-
-          unconnectedNodesVisible={!this.state.filterUnconnectedNodes}
-          ncEngineersVisible={!this.state.filterNCEngineers}
-          engineersFiltered={this.state.engineersFiltered}
-          commercialFiltered={this.state.commercialFiltered}
-          searchHighlight={this.state.searchHighlightLinks}
-          searchBios={this.state.searchIncludeBios}
-          emitResetFilters={() => {
-            this.slotClearFilters();
-          }}
-          emitToggleSpiralOrder={() => this.toggleSpiralOrder()}
-          emitToggleFilter={() => this.toggleEngCommFilter()}
-          emitToggleNodeSize={() => this.toggleNodeSize()}
-          emitToggleSearch={toggle_search}
-
-          emitToggleFilterCommercial={() => this.slotToggleFilterCommercial()}
-          emitToggleFilterEngineering={() => this.slotToggleFilterEngineer()}
-          emitToggleUnconnectedNodesVisible={() => this.slotToggleUnconnectedNodes()}
-          emitToggleNCEngineersVisible={() => this.slotToggleNonContributingEngineers()}
-          emitSearchHighlightToggled={() => this.slotSearchHighlightToggled(!this.state.searchHighlightLinks)}
-          emitSearchBiosToggled={() => this.slotSearchBiosToggled(!this.state.searchIncludeBios)}
-        />
-      </SlidingPanel>
-    );
-
-    // make sure that we don't have too many nodes...
-    let nnodes = this.state.social.getGraph().nodes.length;
-
-    let warning_popover = null;
-
-    if (this.state.warningVisible && nnodes > 50) {
-      warning_popover = (
-        <Overlay useBackground={false} toggleOverlay={() => { this.slotCloseWarning() }}>
-        <WarningOverlay close={() => { this.slotCloseWarning() }}>
-            As you can see, this is a busy network. Using filters will allow you
-            to examine the network more closely.
-        </WarningOverlay>
-          </Overlay>
-      );
-    }
-
     return (
       <div>
-        {mainmenu}
         <div className={styles.ui_main}>
           <VBox>
-            <HBox>
-              {menu}
-              <BigBox>{search}</BigBox>
-              {help}
-            </HBox>
-
             <BigBox>
               <div className={styles.fullscreen}>{graph}</div>
             </BigBox>
 
             <HBox>
               {left_side}
-              <BigBox>{ship_button}</BigBox>
               {right_side}
             </HBox>
           </VBox>
         </div>
-        {overlay}
-        {warning_popover}
       </div>
     );
   }
