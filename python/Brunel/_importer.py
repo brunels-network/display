@@ -20,6 +20,7 @@ __all__ = [
     "importSharedLinks",
     "importProjectDates",
     "importWeights",
+    "importWeightPath",
     "importEdgeCount",
 ]
 
@@ -238,11 +239,18 @@ def importPerson(node, project, importers=None):
     except KeyError:
         importProjectDates = importProjectDates
 
+    try:
+        importWeightPath = importers["importWeightPath"]
+    except KeyError:
+        importWeightPath = importWeightPath
+
     pid = project.getID()
 
     try:
         name = str(node.Label)
         state = extractPersonName(name)
+
+        state["weight_path"] = {pid: importWeightPath(node, importers=importers)}
 
         #state["positions"] = {pid: importPositions(node, importers=importers)}
         #state["sources"] = {pid: importSources(node, importers=importers)}
@@ -326,6 +334,11 @@ def importBusiness(node, project, importers=None):
     except KeyError:
         importEdgeCount = importEdgeCount
 
+    try:
+        importWeightPath = importers["importWeightPath"]
+    except KeyError:
+        importWeightPath = importWeightPath
+
     from ._daterange import DateRange as _DateRange
 
     pid = project.getID()
@@ -341,6 +354,8 @@ def importBusiness(node, project, importers=None):
         #state["positions"] = {pid: importPositions(node, importers=importers)}
         #state["projects"] = {pid: _DateRange.null()}
         #state["highlight"] = {pid: importHighlights(node, importers=importers)}
+
+        state["weight_path"] = {pid: importWeightPath(node, importers=importers)}
 
         from ._business import Business as _Business
 
@@ -640,6 +655,22 @@ def importSources(node, importers=None):
     return result
 
 
+def importWeightPath(node, importers=None):
+    """Import the weight trajectory associated with different dates"""
+
+    from ._weightpath import WeightPath as _WeightPath
+
+    props = {
+        "start_date": _clean_string(node["Start Date"]),
+        "start_weight": _clean_string(node["Start Weight"]),
+        "weight_change": _clean_string(node["Weight Change"]),
+        "date_change": _clean_string(node["Date Change"]),
+        "location": _clean_string(node["Bristol/Bath or London"])
+    }
+
+    return _WeightPath(props)
+
+
 def importWeights(node, importers=None):
     """ Import weights of each person from file
 
@@ -707,6 +738,7 @@ def importDate(data, importers=None):
 
     props = {
         "name": _clean_string(data.Date),
+        "month": _clean_string(data.Month),
         "description": _clean_string(data.Text),
     }
 
@@ -830,5 +862,6 @@ def getDefaultImporters():
         "importProjectDates": importProjectDates,
         "importWeights": importWeights,
         "importEdgeCount": importEdgeCount,
-        "importHighlights": importHighlights
+        "importHighlights": importHighlights,
+        "importWeightPath": importWeightPath,
     }

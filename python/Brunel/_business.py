@@ -60,6 +60,7 @@ class Business:
             "highlighted": {},
             "notes": [],
             "weight": {},
+            "weight_path": {},
         }
 
         self.setState(props)
@@ -110,6 +111,7 @@ class Business:
         self.state["highlighted"] = _setState(state, "highlighted", {})
         self.state["notes"] = _setState(state, "notes", [])
         self.state["weight"] = _setState(state, "weight")
+        self.state["weight_path"] = _setState(state, "weight_path", {})
         self.state["positions"] = _setState(state, "positions", {})
 
         if self.state["name"] == "None" or self.state["name"] is None:
@@ -141,6 +143,7 @@ class Business:
 
         _mergeStateItems(state, other.state, "projects")
         _mergeStateItems(state, other.state, "weight")
+        _mergeStateItems(state, other.state, "weight_path")
 
         # for id, dates in other.state["projects"].items():
         #     state["projects"][id] = dates

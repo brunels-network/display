@@ -22,6 +22,7 @@ class KeyDate:
             "name": None,
             "id": None,
             "description": None,
+            "month": None,
         }
 
         self.setState(props)
@@ -41,6 +42,9 @@ class KeyDate:
     def getDescription(self):
         return self.state["description"]
 
+    def getMonth(self):
+        return self.state["month"]
+
     def setState(self, state):
         if not state:
             return
@@ -48,6 +52,7 @@ class KeyDate:
         self.state["name"] = _setState(state, "name")
         self.state["id"] = _setState(state, "id")
         self.state["description"] = _setState(state, "description")
+        self.state["month"] = _setState(state, "month", None)
 
         if self.state["name"] == "None" or self.state["name"] is None:
             raise ValueError(f"No name for {self}?")
