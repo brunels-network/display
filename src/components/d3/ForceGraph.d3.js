@@ -276,7 +276,7 @@ class ForceGraphD3 extends React.Component {
       )
       // Here size is the weight given to that entity
       .attr("r", (d) => {
-        d.radius = Math.min(30, 5 + (0.5 * (d.size * d.size)));
+        d.radius = Math.min(15, 5 + (0.5 * (d.size * d.size)));
 
         if (d.size < 1.5) {
           //d.radius = 3;
@@ -481,9 +481,9 @@ class ForceGraphD3 extends React.Component {
 
     let simulation = d3
       .forceSimulation(graph.nodes)
-      .alpha(1.0)
+      .alpha(0.2)
       .alphaTarget(0)
-      .alphaDecay(0.075)
+      .alphaDecay(0.015)
       .force("spiral",
         force_spiral(w, h)
           .strength(0.3)

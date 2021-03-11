@@ -119,6 +119,19 @@ export default function force_spiral(width, height) {
       max_y = Math.max(max_y, points_y[i]);
     }
 
+    for (let i = max_index + 1; i <= 40; ++i) {
+      radius = Math.sqrt(i);
+      angle += Math.asin(1 / radius);
+      let point_x = Math.cos(angle) * radius;
+      let point_y = Math.sin(angle) * radius;
+
+      min_x = Math.min(min_x, point_x);
+      max_x = Math.max(max_x, point_x);
+
+      min_y = Math.min(min_y, point_y);
+      max_y = Math.max(max_y, point_y);
+    }
+
     // we now need to scale such that 'radius' can fit comfortably
     // on a width * height page
     let center_x = width / 2;
