@@ -1,6 +1,7 @@
 import Dry from "json-dry";
 import lodash from "lodash";
 
+import WeightPath from "./WeightPath";
 import DateRange from "./DateRange";
 
 import { ValueError } from "./Errors";
@@ -75,6 +76,7 @@ class Business {
       affiliations: {},
       notes: [],
       weight: {},
+      weight_path: {},
       is_highlighted: false,
       is_selected: false,
     };
@@ -233,6 +235,7 @@ class Business {
       this.state.sources = setState(state.sources, {});
       this.state.notes = setState(state.notes, []);
       this.state.weight = setState(state.weight);
+      this.state.weight_path = setState(state.weight_path, {});
 
       if (!this.state.name) {
         throw new ValueError("You cannot have an Business without a name");
@@ -254,12 +257,30 @@ class Business {
   }
 
   getWeight(project_id = null) {
-    return 5.0;
+    if (project_id === null) {
+      // use the first project's weight
+      try {
+        project_id = Object.keys(this.state.weight)[0];
+      } catch (error) {
+        return 5.0;
+      }
+    }
+    return this.state.weight[project_id];
+  }
+
+  getWeightPath(project_id = null) {
     if (project_id === null) {
       // use the first project's weight
       project_id = Object.keys(this.state.weight)[0];
     }
-    return this.state.weight[project_id];
+
+    const weight_path = this.state.weight_path[project_id];
+
+    if (!weight_path){
+      return new WeightPath();
+    }
+
+    return weight_path;
   }
 
   toString() {

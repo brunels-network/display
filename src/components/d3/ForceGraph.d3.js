@@ -114,8 +114,6 @@ class ForceGraphD3 extends React.Component {
       new_graph = social.getGraph();
     }
 
-    console.log(new_graph);
-
     // The social object will cache the 'getGraph' result, meaning
     // that any change in this object signals that the graph needs
     // to be redrawn

@@ -10,10 +10,6 @@ import styles from "./SearchBar.module.css";
 
 class SearchBar extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   onChangeHandler(event) {
     let text = event.target.value;
 

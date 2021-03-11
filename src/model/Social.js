@@ -10,6 +10,7 @@ import Sources from "./Sources";
 import Notes from "./Notes";
 import Projects from "./Projects";
 import Biographies from "./Biographies";
+import KeyDates from "./KeyDates";
 import DateRange from "./DateRange";
 import get_id from "./get_id";
 
@@ -136,6 +137,12 @@ class Social {
       state.biographies = new Biographies();
     } else {
       state.biographies = this.state.biographies;
+    }
+
+    if (!(this.state.keydates instanceof KeyDates)) {
+      state.keydates = new KeyDates();
+    } else {
+      state.keydates = this.state.keydates;
     }
 
     this.state = state;
@@ -807,8 +814,6 @@ class Social {
 
     item = this.get(item, false);
 
-    console.log(item);
-
     if (item === null) {
       return false;
     }
@@ -826,8 +831,6 @@ class Social {
     }
 
     item = this.get(item, false);
-
-    console.log(item);
 
     if (item === null) {
       return false;
@@ -1134,19 +1137,12 @@ class Social {
    *  show their sorted order according to the primary criterion
    */
   getGraph() {
-    console.log("HERE");
-
     if (this.state.cache.graph !== null) {
       return this.state.cache.graph;
     }
 
-    console.log("GET NODES");
-    console.log(this.getPeople(false));
-
     let nodes = this.getPeople(false).getNodes();
     nodes = nodes.concat(this.getBusinesses(false).getNodes());
-
-    console.log(nodes);
 
     // create a dictionary so we know which nodes are selected
     let n = {};

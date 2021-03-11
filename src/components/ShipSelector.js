@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import HBox from "./HBox";
 
 import styles from "./ShipSelector.module.css";
-import { startsWith } from "lodash";
 
 function ShipButton(props) {
   let name = props.ship.getName();

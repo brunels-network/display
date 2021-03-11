@@ -3,9 +3,8 @@ import lodash from "lodash";
 
 import DateRange from "./DateRange";
 
-import positionGroups from "../data/positionGroups.json";
-
 import { ValueError } from "./Errors";
+import WeightPath from "./WeightPath";
 
 function setState(val, def = null) {
   if (val) {
@@ -84,6 +83,7 @@ class Person {
       notes: [],
       orig_name: null,
       weight: {},
+      weight_path: {},
     };
 
     this.setState(props);
@@ -256,6 +256,7 @@ class Person {
       this.state.orig_name = setState(state.orig_name);
       this.state.notes = setState(state.notes, []);
       this.state.weight = setState(state.weight);
+      this.state.weight_path = setState(state.weight_path, {});
       this.state.is_highlighted = false;
       this.state.is_selected = false;
 
@@ -431,6 +432,21 @@ class Person {
     return weight;
   }
 
+  getWeightPath(project_id = null) {
+    if (project_id === null) {
+      // use the first project's weight
+      project_id = Object.keys(this.state.weight)[0];
+    }
+
+    const weight_path = this.state.weight_path[project_id];
+
+    if (!weight_path){
+      return new WeightPath();
+    }
+
+    return weight_path;
+  }
+
   setSelected(val) {
     if (val) {
       this.state.is_selected = true;
@@ -458,10 +474,13 @@ class Person {
   }
 
   getWeight(project_id = null) {
-    return 5.0;
     if (project_id === null) {
       // return the first project weight
-      project_id = Object.keys(this.state.weight)[0];
+      try {
+        project_id = Object.keys(this.state.weight)[0];
+      } catch (error) {
+        return 5.0;
+      }
     }
 
     return this.state.weight[project_id];
@@ -469,7 +488,7 @@ class Person {
 
   isEngineer(project_id = null) {
     return true;
-    if (project_id === null) {
+ /*   if (project_id === null) {
       project_id = Object.keys(this.state.positions)[0];
     }
 
@@ -485,12 +504,12 @@ class Person {
       }
     }
 
-    return false;
+    return false;*/
   }
 
   isNonContributingEngineer(project_id = null) {
     return false;
-    if (project_id === null) {
+    /*if (project_id === null) {
       // return this status with the first project
       project_id = Object.keys(this.state.positions)[0];
     }
@@ -505,7 +524,7 @@ class Person {
       }
     }
 
-    return false;
+    return false;*/
   }
 
   getNode() {
