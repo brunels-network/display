@@ -18,6 +18,7 @@ class KeyDates {
 
     this._names = {};
     this._isAKeyDatesObject = true;
+    this._sorted_dates = null;
   }
 
   _updateHooks(hook) {
@@ -63,8 +64,51 @@ class KeyDates {
     return this._names;
   }
 
+  getSortedDates(){
+    if (this._sorted_dates){
+      return this._sorted_dates;
+    }
+
+    let d = this.getNames();
+    d.sort((a, b) => {return a - b});
+
+    let dates = [];
+
+    d.forEach((value) => {
+      dates.push(this.getByName(value));
+    });
+
+    this._sorted_dates = dates;
+
+    return this._sorted_dates;
+  }
+
   canAdd(item) {
     return item instanceof KeyDate || item._isAKeyDateObject;
+  }
+
+  getNumDates(){
+    return Object.keys(this._names).length;
+  }
+
+  wrapIndex(date_index) {
+    date_index = parseInt(date_index);
+
+    let num_dates = this.getNumDates();
+
+    if (num_dates <= 0){
+      num_dates = 1;
+    }
+
+    if (date_index === NaN){
+      return 0;
+    } else if (date_index < 0){
+      return num_dates - 1;
+    } else if (date_index >= num_dates){
+      return 0;
+    } else {
+      return date_index;
+    }
   }
 
   add(keydate) {

@@ -165,6 +165,10 @@ class Social {
     this.state.default_image = filename;
   }
 
+  getKeyDates(){
+    return this.state.keydates;
+  }
+
   getImage(id) {
     id = get_id(id);
     let image = this.state.images[id];

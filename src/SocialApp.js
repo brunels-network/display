@@ -15,6 +15,7 @@ import ShipOverlay from "./components/ShipOverlay";
 import SlidingPanel from "./components/SlidingPanel";
 import MainMenu from "./components/MainMenu";
 import WarningOverlay from "./components/WarningOverlay";
+import KeyDatesBox from "./components/KeyDatesBox";
 
 import HBox from "./components/HBox";
 import VBox from "./components/VBox";
@@ -76,6 +77,7 @@ class SocialApp extends React.Component {
       menuVisible: false,
       height: 0,
       width: 0,
+      date_index: 0,
       warningVisible: true,
     };
 
@@ -549,6 +551,19 @@ class SocialApp extends React.Component {
     }
   }
 
+  slotSetDateIndex(date_index) {
+    date_index = this.state.social.getKeyDates().wrapIndex(date_index);
+    this.setState({date_index: date_index});
+  }
+
+  slotPlay() {
+    console.log("PLAY");
+  }
+
+  slotPause() {
+    console.log("PAUSE");
+  }
+
   toggleOverlay() {
     this.setState({ isOverlayOpen: !this.state.isOverlayOpen });
   }
@@ -574,9 +589,6 @@ class SocialApp extends React.Component {
       />
     );
 
-    let left_side = null;
-    let right_side = null;
-
     return (
       <div>
         <div className={styles.ui_main}>
@@ -585,10 +597,13 @@ class SocialApp extends React.Component {
               <div className={styles.fullscreen}>{graph}</div>
             </BigBox>
 
-            <HBox>
-              {left_side}
-              {right_side}
-            </HBox>
+            <KeyDatesBox 
+              social={this.state.social}
+              index={this.state.date_index}
+              signalSetDateIndex={(date_index) => this.slotSetDateIndex(date_index)}
+              signalPlay={() => this.slotPlay()}
+              signalPause={() => this.slotPause()}
+            />
           </VBox>
         </div>
       </div>
