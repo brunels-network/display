@@ -165,6 +165,11 @@ class Social {
     this.state.default_image = filename;
   }
 
+  setKeyDateFilter(date_index){
+    this.state.filter["date_index"] = date_index;
+    this.clearCache();
+  }
+
   getKeyDates(){
     return this.state.keydates;
   }
@@ -262,7 +267,7 @@ class Social {
     this.state.cache.node_filters = [];
 
     // Must do time first, as this can affect all of the other filters!
-    let window = this.getWindow();
+    /*let window = this.getWindow();
 
     if (window.hasStart() || window.hasEnd()) {
       this.state.cache.node_filters.push((item) => {
@@ -273,21 +278,32 @@ class Social {
           return item;
         }
       });
-    }
+    }*/
 
-    const project_filter = this.state.filter.project;
+    /*const project_filter = this.state.filter.project;
 
     if (project_filter) {
       this.state.cache.node_filters.push((item) => {
         return item.filterProject(project_filter);
       });
-    }
+    }*/
 
-    const source_filter = this.state.filter.source;
+    /*const source_filter = this.state.filter.source;
 
     if (source_filter) {
       this.state.cache.node_filters.push((item) => {
         return item.filterSource(source_filter);
+      });
+    }*/
+
+    const date_index = this.state.filter.date_index;
+
+    if (date_index !== null){
+      console.log(`Filter on date: ${date_index}`);
+      const keydate = this.getKeyDates().getByIndex(date_index);
+
+      this.state.cache.node_filters.push((item) => {
+        return item.filterKeyDate(keydate);
       });
     }
 
@@ -476,7 +492,7 @@ class Social {
         this._rebuilding -= 1;
       }
 
-      if (this.state.filter_nc_engineers) {
+      /*if (this.state.filter_nc_engineers) {
         this.state.cache.people =
           this.state.cache.people.filterNonContributingEngineers();
       }
@@ -484,7 +500,7 @@ class Social {
       if (this.state.filter_unconnected) {
         this.state.cache.people =
           this.state.cache.people.filterUnconnected(this.getConnections(true));
-      }
+      }*/
 
       return this.state.cache.people;
     } else {
@@ -505,7 +521,7 @@ class Social {
         this._rebuilding -= 1;
       }
 
-      if (this.state.filter_nc_engineers) {
+      /*if (this.state.filter_nc_engineers) {
         this.state.cache.businesses =
           this.state.cache.businesses.filterNonContributingEngineers();
       }
@@ -513,7 +529,7 @@ class Social {
       if (this.state.filter_unconnected) {
         this.state.cache.businesses =
           this.state.cache.businesses.filterUnconnected(this.getConnections(true));
-      }
+      }*/
 
       return this.state.cache.businesses;
     } else {
@@ -1145,8 +1161,8 @@ class Social {
       return this.state.cache.graph;
     }
 
-    let nodes = this.getPeople(false).getNodes();
-    nodes = nodes.concat(this.getBusinesses(false).getNodes());
+    let nodes = this.getPeople().getNodes();
+    nodes = nodes.concat(this.getBusinesses().getNodes());
 
     // create a dictionary so we know which nodes are selected
     let n = {};
@@ -1155,7 +1171,7 @@ class Social {
     }
 
     // get only the edges that involve these nodes
-    let edges = this.getConnections(false).getEdges(n);
+    let edges = this.getConnections().getEdges(n);
 
     // let each node know how many connections it has got
     let counts = {};

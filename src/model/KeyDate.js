@@ -58,6 +58,10 @@ class KeyDate {
     return this;
   }
 
+  isLater(other){
+    return parseFloat(other.getName()) < parseFloat(this.getName());
+  }
+
   toString() {
     return `KeyDate(${this.getName()})`;
   }

@@ -130,6 +130,20 @@ class Business {
     return this.state.id;
   }
 
+  filterKeyDate(keydate){
+    const weightpath = this.getWeightPath();
+
+    let weight = weightpath.getWeightAtDate(keydate);
+
+    if (weight <= 0.0){
+      return null;
+    }
+
+    this.state.weight = weight;
+
+    return this;
+  }
+
   filterSource(source) {
     if (source.getID) {
       let id = source.getID();
@@ -257,21 +271,19 @@ class Business {
   }
 
   getWeight(project_id = null) {
-    if (project_id === null) {
-      // use the first project's weight
-      try {
-        project_id = Object.keys(this.state.weight)[0];
-      } catch (error) {
-        return 5.0;
-      }
+    let weight = this.state.weight;
+
+    if (weight === null){
+      weight = 5.0;
     }
-    return this.state.weight[project_id];
+
+    return weight;
   }
 
   getWeightPath(project_id = null) {
     if (project_id === null) {
       // use the first project's weight
-      project_id = Object.keys(this.state.weight)[0];
+      project_id = Object.keys(this.state.weight_path)[0];
     }
 
     const weight_path = this.state.weight_path[project_id];

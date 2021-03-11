@@ -1,5 +1,6 @@
 import Dry from "json-dry";
 import lodash from "lodash";
+import KeyDate from "./KeyDate";
 
 function setState(val, def = null) {
   if (val) {
@@ -38,7 +39,11 @@ class WeightPath {
   }
 
   getStartWeight() {
-    return this.state.start_weight;
+    if (!this.state.start_weight){
+      return 0.0;
+    } else {
+      return this.state.start_weight;
+    }
   }
 
   getStartDate() {
@@ -46,7 +51,11 @@ class WeightPath {
   }
 
   getWeightChange() {
-    return this.state.weight_change;
+    if (!this.state.weight_change){
+      return 0.0;
+    } else {
+      return this.state.weight_change;
+    }
   }
 
   getDateChange() {
@@ -57,13 +66,45 @@ class WeightPath {
     return this.state.location;
   }
 
+  getWeightAtDate(keydate){
+    if (!keydate){
+      return this.getStartWeight();
+    }
+
+    let d = this.getStartDate();
+
+    if (d === null){
+      return this.getStartWeight();
+    }
+
+    d = new KeyDate({name: d});
+
+    if (d.isLater(keydate)){
+      return 0.0;
+    } 
+    
+    d = this.getDateChange();
+
+    if (d === null){
+      return this.getStartWeight();
+    }
+
+    d = new KeyDate({name: d});
+
+    if (d.isLater(keydate)) {
+      return this.getStartWeight();
+    } else { 
+      return this.getStartWeight() + this.getWeightChange();
+    }
+  }
+
   setState(state) {
     if (state) {
       this.state.id = setState(state.id);
-      this.state.start_weight = setState(state.start_weight, 1.0);
-      this.state.start_date = setState(state.start_date, null);
-      this.state.weight_change = setState(state.weight_change, 0.0);
-      this.state.date_change = setState(state.date_change, null);
+      this.state.start_weight = setState(parseFloat(state.start_weight), 1.0);
+      this.state.start_date = setState(parseFloat(state.start_date), null);
+      this.state.weight_change = setState(parseFloat(state.weight_change), 0.0);
+      this.state.date_change = setState(parseFloat(state.date_change), null);
       this.state.location = setState(state.location, null);
     }
   }

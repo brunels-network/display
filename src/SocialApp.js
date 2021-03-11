@@ -553,7 +553,10 @@ class SocialApp extends React.Component {
 
   slotSetDateIndex(date_index) {
     date_index = this.state.social.getKeyDates().wrapIndex(date_index);
-    this.setState({date_index: date_index});
+    let social = this.state.social;
+    social.setKeyDateFilter(date_index);
+    this.setState({date_index: date_index,
+                   social: social});
   }
 
   slotPlay() {

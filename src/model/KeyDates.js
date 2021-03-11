@@ -64,6 +64,18 @@ class KeyDates {
     return this._names;
   }
 
+  getByIndex(date_index){
+    let sorted_dates = this.getSortedDates();
+
+    if (date_index < 0){
+      return date_index = 0;
+    } else if (date_index >= sorted_dates.length) {
+      return sorted_dates.length - 1;
+    }
+
+    return sorted_dates[date_index];
+  }
+
   getSortedDates(){
     if (this._sorted_dates){
       return this._sorted_dates;
