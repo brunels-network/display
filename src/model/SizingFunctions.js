@@ -1,4 +1,12 @@
 
+/** Just give each node its size according to its weight */
+function size_by_weight(nodes, edges, social) {
+  nodes.forEach((node) => {
+    let size = node.weight;
+    node.size = size;
+  });
+}
+
 /** Size each node by the influence of each node. Calculates the
  *  weight for a node and returns it
  */
@@ -76,5 +84,6 @@ function size_by_connections(nodes, edges, social) {
 export {
   size_by_connections as default,
   size_by_connections,
-  size_by_influence
+  size_by_influence,
+  size_by_weight,
 };

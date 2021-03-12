@@ -39,7 +39,7 @@ import styles from "./SocialApp.module.css";
 
 import { score_by_connections, score_by_influence } from "./model/ScoringFunctions";
 
-import { size_by_connections, size_by_influence } from "./model/SizingFunctions";
+import { size_by_connections, size_by_influence, size_by_weight } from "./model/SizingFunctions";
 
 class SocialApp extends React.Component {
   constructor(props) {
@@ -108,13 +108,13 @@ class SocialApp extends React.Component {
       Connections: size_by_connections,
     });
 
-    this.state.social.setSizingFunction(size_by_influence);
+    this.state.social.setSizingFunction(size_by_weight);
 
     // Find the investors and engineers for easy filtering
     // This requires the
     this.findInvestorsAndEngineers();
 
-    this.state.social.setScoringFunction(this.spiralOrders[this.state.spiralOrder]);
+    this.state.social.setScoringFunction(score_by_influence);
 
     this.socialGraph = null;
   }

@@ -14,8 +14,8 @@ import KeyDates from "./KeyDates";
 import DateRange from "./DateRange";
 import get_id from "./get_id";
 
-import score_by_connections from "./ScoringFunctions";
-import size_by_influence from "./SizingFunctions";
+import score_by_influence from "./ScoringFunctions";
+import size_by_weight from "./SizingFunctions";
 
 import {
   ValueError
@@ -57,8 +57,8 @@ class Social {
     };
     this.state.window = new DateRange();
     this.state.max_window = new DateRange();
-    this.state.scoring_function = score_by_connections;
-    this.state.sizing_function = size_by_influence;
+    this.state.scoring_function = score_by_influence;
+    this.state.sizing_function = size_by_weight;
     this.state.filter_unconnected = true;
     this.state.filter_nc_engineers = true;
     this.state.images = {};
@@ -1197,7 +1197,7 @@ class Social {
     let scoring_function = this.getScoringFunction();
 
     if (!scoring_function) {
-      scoring_function = score_by_connections;
+      scoring_function = score_by_influence;
     }
 
     scoring_function(nodes, edges, this);
@@ -1205,7 +1205,7 @@ class Social {
     let sizing_function = this.getSizingFunction();
 
     if (!sizing_function) {
-      sizing_function = size_by_influence;
+      sizing_function = size_by_weight;
     }
 
     sizing_function(nodes, edges, this);

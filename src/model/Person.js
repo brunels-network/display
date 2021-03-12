@@ -149,6 +149,8 @@ class Person {
       return null;
     }
     
+    console.log(`${this.getName()} : ${weight}`);
+    
     this.state.weight = weight;
 
     return this;
