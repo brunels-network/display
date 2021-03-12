@@ -13,6 +13,7 @@ class ForceGraph extends React.Component {
 
     this.state = {
       popup: null,
+      show_logos: true,
     };
 
     this.updateSize = this.updateSize.bind(this);
@@ -47,6 +48,10 @@ class ForceGraph extends React.Component {
       let width = containerRect.width;
       let height = containerRect.height;
 
+      let show_logos = (width >= 768);
+
+      this.setState({show_logos: show_logos});
+
       this.graph.update({
         width: width,
         height: height
@@ -80,20 +85,36 @@ class ForceGraph extends React.Component {
       />;
     }
 
+    let logos = null;
+
+    if (this.state.show_logos){
+      logos = (
+        <div>
+           <div className={styles.left_logo}>
+            <img src={require("../images/uob_logo.png")}
+                 alt="University of Bristol Logo"
+                 className={styles.uob_logo_image}
+            />
+          </div>
+          <div className={styles.qr_logo}>
+            <img src={require("../images/network.png")}
+                 alt="QR code for URL - fill in later"
+                 className={styles.qr_logo_image}
+            />
+          </div>
+          <div className={styles.right_logo}>
+            <img src={require("../images/bi_logo.png")}
+                 alt="Bristol Institute Logo"
+                 className={styles.bi_logo_image}
+            />
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div ref={this.containerRef} className={styles.container}>
-        <div className={styles.left_logo}>
-          <img src={require("../images/uob_logo.png")}
-            alt="University of Bristol Logo"
-            className={styles.uob_logo_image}
-          />
-        </div>
-        <div className={styles.right_logo}>
-          <img src={require("../images/bi_logo.png")}
-            alt="Bristol Institute Logo"
-            className={styles.bi_logo_image}
-          />
-        </div>
+        {logos}
         <div className={this.graph.className()}>
           {popup}
         </div>

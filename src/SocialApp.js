@@ -16,6 +16,7 @@ import SlidingPanel from "./components/SlidingPanel";
 import MainMenu from "./components/MainMenu";
 import WarningOverlay from "./components/WarningOverlay";
 import KeyDatesBox from "./components/KeyDatesBox";
+import PlayPause from "./components/PlayPause";
 
 import HBox from "./components/HBox";
 import VBox from "./components/VBox";
@@ -561,12 +562,26 @@ class SocialApp extends React.Component {
                    social: social});
   }
 
+  nextFrame(){
+    let date_index = this.state.date_index;
+    this.slotSetDateIndex(date_index + 1);
+  }
+
   slotPlay() {
     console.log("PLAY");
+    if (this.interval){
+      return;
+    }
+
+    this.interval = setInterval(()=>{this.nextFrame()}, 10000);
   }
 
   slotPause() {
     console.log("PAUSE");
+    if (this.interval){
+      clearInterval(this.interval);
+      this.interval = null;
+    }
   }
 
   toggleOverlay() {
@@ -601,14 +616,13 @@ class SocialApp extends React.Component {
             <BigBox>
               <div className={styles.fullscreen}>{graph}</div>
             </BigBox>
-
             <KeyDatesBox 
               social={this.state.social}
               index={this.state.date_index}
               signalSetDateIndex={(date_index) => this.slotSetDateIndex(date_index)}
-              signalPlay={() => this.slotPlay()}
-              signalPause={() => this.slotPause()}
             />
+            <PlayPause signalPlay={()=>this.slotPlay()}
+                       signalPause={()=>this.slotPause()} />
           </VBox>
         </div>
       </div>

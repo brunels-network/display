@@ -8,8 +8,19 @@
     max-width: 85px;
 }
 
+.qr_logo_image {
+    max-width: 85px;
+}
+
 .bi_logo_image {
     max-width: 75px;
+}
+
+.qr_logo {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 0;
 }
 
 .right_logo {

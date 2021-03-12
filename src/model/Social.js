@@ -299,7 +299,6 @@ class Social {
     const date_index = this.state.filter.date_index;
 
     if (date_index !== null){
-      console.log(`Filter on date: ${date_index}`);
       const keydate = this.getKeyDates().getByIndex(date_index);
 
       this.state.cache.node_filters.push((item) => {

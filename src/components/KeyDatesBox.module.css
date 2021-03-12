@@ -2,10 +2,32 @@
 .box {
     text-align: center;
     color: white;
-    max-width: 75%;
-    height: 100px;
+    max-width: 95%;
     margin: auto;
+    background-color: black;
+    height: 75px;
 }
 
-.sliderbox {
+.textbox {
+    padding: 5px;
+    color: white;
+    font-family: "Domine";
+    font-size: 12pt;
+    background-color: black;
+    height: 100%;
 }
+
+@media only screen and (max-width: 600px) {
+    .box {
+        height: 50px;
+    }
+    .textbox {
+      font-size: 8pt;
+    }
+  }
+
+@media only screen and (min-width: 1200px) {
+    .textbox {
+      font-size: 14pt;
+    }
+  }

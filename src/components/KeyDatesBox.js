@@ -29,9 +29,10 @@ class KeyDatesBox extends React.Component {
         <VBox>
           <div className={styles.sliderbox}>
             <Slider min={0} max={max_val-1}
+                    value={this.props.index}
                     onChange={(val)=>{this.props.signalSetDateIndex(val)}}/>
           </div>
-            <div>
+            <div className={styles.textbox}>
               {date.getDescription()}
             </div>
         </VBox>
