@@ -294,25 +294,25 @@ class ForceGraphD3 extends React.Component {
         if (d.selected) {
           return `node ${styles.node_selected} selected`;
         }
-        else if (d.type === "business") {
+        else if (d.location === "Bristol") {
           if (d.highlighted) {
-            return `node ${styles.node_business_highlighted} highlighted`;
+            return `node ${styles.node_bristol_highlighted} highlighted`;
           } else {
-            return `node ${styles.node_business}`;
+            return `node ${styles.node_bristol}`;
           }
         }
-        else if (d.is_nc_engineer) {
+        else if (d.location === "Bath") {
           if (d.highlighted) {
-            return `node ${styles.node_nc_engineer_highlighted} highlighted`;
+            return `node ${styles.node_bath_highlighted} highlighted`;
           } else {
-            return `node ${styles.node_nc_engineer}`;
+            return `node ${styles.node_bath}`;
           }
         }
-        else if (d.is_engineer) {
+        else if (d.location === "London") {
           if (d.highlighted) {
-            return `node ${styles.node_engineer_highlighted} highlighted`;
+            return `node ${styles.node_london_highlighted} highlighted`;
           } else {
-            return `node ${styles.node_engineer}`;
+            return `node ${styles.node_london}`;
           }
         }
         else {

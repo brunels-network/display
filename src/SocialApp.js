@@ -116,6 +116,8 @@ class SocialApp extends React.Component {
 
     this.state.social.setScoringFunction(score_by_influence);
 
+    this.slotSetDateIndex(0);
+
     this.socialGraph = null;
   }
 

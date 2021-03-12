@@ -393,6 +393,7 @@ class Business {
       title: this.getName(),
       initials: this.getInitials(),
       shape: "square",
+      location: this.getWeightPath().getLocation(),
       highlighted: this.getHighlighted(),
       selected: this.getSelected(),
       weight: this.getWeight(),

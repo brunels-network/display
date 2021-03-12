@@ -549,6 +549,7 @@ class Person {
       shape: "circle",
       weight: this.getWeight(),
       type: "person",
+      location: this.getWeightPath().getLocation(),
       highlighted: this.getHighlighted(),
       selected: this.getSelected(),
       project: this.getProjectID(),

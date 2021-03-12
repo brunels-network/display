@@ -43,37 +43,37 @@
     stroke-width: 2px;
 }
 
-.node_engineer {
+.node_bristol {
     stroke: #373935;
     fill: #E63309;
     stroke-width: 1px;
 }
 
-.node_engineer_highlighted {
+.node_bristol_highlighted {
     stroke: #D2CFCD;
     fill: #f85a36;
     stroke-width: 2px;
 }
 
-.node_business {
-    stroke: #373935;
-    fill: #373935;
+.node_bath {
+    stroke: #0b004d;
+    fill:  #1e00c7;
     stroke-width: 1px;
 }
 
-.node_business_highlighted {
+.node_bath_highlighted {
     stroke: #D2CFCD;
     fill: #B3B1B1;
     stroke-width: 2px;
 }
 
-.node_nc_engineer {
-    fill: #111111;
-    stroke: #373935;
+.node_london {
+    fill: #0d3f00;
+    stroke: #003100;
     stroke-width: 1px;
 }
 
-.node_nc_engineer_highlighted {
+.node_london_highlighted {
     fill: #111111;
     stroke: #D2CFCD;
     stroke-width: 2px;
