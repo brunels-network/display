@@ -8,7 +8,7 @@ exports[`Overlay Item No background matches snapshot 1`] = `
   >
     <div>
       <button
-        class="button css-tknci1"
+        class="button"
       >
         This is a test
       </button>
@@ -25,7 +25,7 @@ exports[`Overlay Item With background matches snapshot 1`] = `
   >
     <div>
       <button
-        class="button css-tknci1"
+        class="button"
       >
         This is a test
       </button>

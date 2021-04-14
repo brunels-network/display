@@ -758,8 +758,8 @@ def importProject(data, importers=None):
 
 
 def importBiography(data, importers=None):
-    name = str(data.Label).lstrip().rstrip()
-    bio = str(data.Description).lstrip().rstrip()
+    name = str(data.Name).lstrip().rstrip()
+    bio = str(data.Biography).lstrip().rstrip()
 
     if importers is None:
         return
