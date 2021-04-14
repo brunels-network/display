@@ -87,21 +87,6 @@ function BioOverlay(props) {
                           className={styles.source_item}>No sources</li>);
   }
 
-  let filename = social.getImage(person);
-  let credit = null;
-
-  if (filename) {
-    credit = social.getImageCredit(person);
-  } else {
-    filename = "images/Great_Western_maiden_voyage.jpg";
-  }
-
-  if (credit) {
-    credit = (
-      <div className={styles.image_credit}>{credit}</div>
-    );
-  }
-
   return (
     <div className={styles.container} onClick={props.close}>
       <div>
@@ -110,20 +95,12 @@ function BioOverlay(props) {
         </div>
       </div>
       <div className={styles.content}>
-        <img className={styles.image} data-testid="bioImage" key={id}
-             src={require(`../${filename}`)} alt="A ship" />
-        {credit}
         <div>
-          <div className={styles.bio_heading}>Biography</div>
           <div className={styles.bio}>{bio}</div>
-          <div className={styles.source_heading}>Sources</div>
-          <ul className={styles.source}>{source_parts}</ul>
         </div>
       </div>
     </div>
   );
-
-  //<div className={styles.caption}>(C) This will be the copyright info / link</div>
 }
 
 BioOverlay.propTypes = {

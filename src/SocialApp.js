@@ -149,6 +149,7 @@ class SocialApp extends React.Component {
   }
 
   slotReadMore(item) {
+    console.log(item);
     this.setOverlay(
       <BioOverlay
         close={() => {
@@ -609,6 +610,19 @@ class SocialApp extends React.Component {
       />
     );
 
+    let overlay = null;
+    if (this.state.isOverlayOpen) {
+      overlay = (
+        <Overlay
+          toggleOverlay={() => {
+            this.toggleOverlay();
+          }}
+        >
+          {this.state.overlayItem}
+        </Overlay>
+      );
+    }
+
     return (
       <div>
         <div className={styles.ui_main}>
@@ -625,6 +639,7 @@ class SocialApp extends React.Component {
                        signalPause={()=>this.slotPause()} />
           </VBox>
         </div>
+        {overlay}
       </div>
     );
   }
