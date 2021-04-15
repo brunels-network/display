@@ -41,6 +41,7 @@ import styles from "./SocialApp.module.css";
 import { score_by_connections, score_by_influence } from "./model/ScoringFunctions";
 
 import { size_by_connections, size_by_influence, size_by_weight } from "./model/SizingFunctions";
+import { faRulerHorizontal } from "@fortawesome/free-solid-svg-icons";
 
 class SocialApp extends React.Component {
   constructor(props) {
@@ -149,7 +150,6 @@ class SocialApp extends React.Component {
   }
 
   slotReadMore(item) {
-    console.log(item);
     this.setOverlay(
       <BioOverlay
         close={() => {
@@ -383,6 +383,7 @@ class SocialApp extends React.Component {
           searchText: "",
           cachedSearch: "",
           searchWasItem: false,
+          selectedPerson: null,
         });
       } else {
         this.performSearch(this.state.cachedSearch, this.state.searchIncludeBios, this.state.searchHighlightLinks);
@@ -395,6 +396,7 @@ class SocialApp extends React.Component {
         social: social,
         searchText: item.getName(),
         searchWasItem: true,
+        selectedPerson: item,
       });
     }
   }
@@ -564,8 +566,45 @@ class SocialApp extends React.Component {
   }
 
   nextFrame(){
-    let date_index = this.state.date_index;
-    this.slotSetDateIndex(date_index + 1);
+    // find someone to highlight
+    let frame_count = this.state.frame_count;
+
+    if (!frame_count){
+      frame_count = 0;
+    }
+
+    frame_count += 1;
+
+    if (frame_count == 1){
+      //clear the current selection
+      this.slotClicked(null);
+      this.closeOverlay();
+    } else if (frame_count == 2){
+      // choose someone new to select
+      let social = this.state.social;
+      try{
+        let person = social.selectAtRandom();
+        this.slotClicked(person);
+      } catch(error) {
+        console.log(error);
+      }
+    } else if (frame_count == 3){
+      try{
+        let person = this.state.selectedPerson;
+
+        if (person){
+          this.slotReadMore(person);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (frame_count == 5){
+      let date_index = this.state.date_index;
+      this.slotSetDateIndex(date_index + 1);
+      frame_count = 0;
+    }
+
+    this.setState({frame_count: frame_count});
   }
 
   slotPlay() {
@@ -574,7 +613,7 @@ class SocialApp extends React.Component {
       return;
     }
 
-    this.interval = setInterval(()=>{this.nextFrame()}, 10000);
+    this.interval = setInterval(()=>{this.nextFrame()}, 1000);
   }
 
   slotPause() {

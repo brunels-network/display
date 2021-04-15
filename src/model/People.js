@@ -10,6 +10,10 @@ function _generate_person_uid() {
   return "P" + uid.substring(uid.length - 7);
 }
 
+function _rand_int(n){
+  return Math.floor(Math.random() * n);
+}
+
 class People {
   constructor(props) {
     this.state = {
@@ -276,6 +280,39 @@ class People {
 
     if (!person) {
       throw new MissingError(`No Person with ID ${id}`);
+    }
+
+    return person;
+  }
+
+  selectAtRandom(bios){
+    // return a randomly selected person who has just been added and who 
+    // has a biography
+    let keys = Object.keys(this.state.registry);
+    let npeople = keys.length;
+    if (npeople === 0){
+      return null;
+    }
+    
+    let idx = _rand_int(npeople);
+    let id = keys[idx];
+
+    let person = this.get(id);
+
+    let bio = bios.get(person);
+
+    while (!bio){
+      keys.splice(idx, 1);
+
+      npeople = keys.length;
+      if (npeople === 0){
+        return null;
+      }
+
+      idx = _rand_int(npeople);
+      id = keys[idx];
+      person = this.get(id);
+      bio = bios.get(person);
     }
 
     return person;

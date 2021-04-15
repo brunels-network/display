@@ -478,6 +478,12 @@ class Social {
     return true;
   }
 
+  selectAtRandom(){
+    // find someone who has only just been filtered in and who has a biography, and select them
+    let people = this.getPeople(true);
+    return people.selectAtRandom(this.getBiographies());
+  }
+
   getPeople(filtered = true) {
     if (this._rebuilding) {
       filtered = false;
