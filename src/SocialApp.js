@@ -613,7 +613,7 @@ class SocialApp extends React.Component {
       return;
     }
 
-    this.interval = setInterval(()=>{this.nextFrame()}, 1000);
+    this.interval = setInterval(()=>{this.nextFrame()}, 3000);
   }
 
   slotPause() {
