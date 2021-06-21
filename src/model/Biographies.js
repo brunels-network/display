@@ -32,6 +32,12 @@ class Biographies {
     return this.state.bios[node];
   }
 
+  remove(id) {
+    if (!id) return null;
+
+    delete this.state.bios[id];
+  }
+
   getByID(id) {
     if (!id) return null;
 

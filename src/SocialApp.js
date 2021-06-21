@@ -583,7 +583,7 @@ class SocialApp extends React.Component {
       // choose someone new to select
       let social = this.state.social;
       try{
-        let person = social.selectAtRandom();
+        let person = social.selectAtStage();
         this.slotClicked(person);
       } catch(error) {
         console.log(error);
@@ -598,7 +598,31 @@ class SocialApp extends React.Component {
       } catch (error) {
         console.log(error);
       }
+    } else if (frame_count == 4){
+      this.slotClicked(null);
+      this.closeOverlay();
+
+      let social = this.state.social;
+      try{
+        let person = social.selectAtRandom();
+        this.slotClicked(person);
+      } catch(error){
+        console.log(error);
+      }
     } else if (frame_count == 5){
+      try{
+        let person = this.state.selectedPerson;
+
+        if (person){
+          this.slotReadMore(person);
+        }
+      } catch(error) {
+        console.log(error);
+      }
+    } else if (frame_count == 6){
+      this.slotClicked(null);
+      this.closeOverlay();
+    } else if (frame_count == 7){
       let date_index = this.state.date_index;
       this.slotSetDateIndex(date_index + 1);
       frame_count = 0;
@@ -669,7 +693,7 @@ class SocialApp extends React.Component {
             <BigBox>
               <div className={styles.fullscreen}>{graph}</div>
             </BigBox>
-            <KeyDatesBox 
+            <KeyDatesBox
               social={this.state.social}
               index={this.state.date_index}
               signalSetDateIndex={(date_index) => this.slotSetDateIndex(date_index)}

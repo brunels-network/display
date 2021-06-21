@@ -66,6 +66,7 @@ class Social {
     this.state.project_text = {};
     this.state.help_text = null;
     this._rebuilding = 0;
+    this._displayed_people = {};
 
     this._isASocialObject = true;
   }
@@ -166,6 +167,11 @@ class Social {
   }
 
   setKeyDateFilter(date_index){
+    if (date_index === 0){
+      // new run, clear list of displayed people
+      this.state._displayed_people = {};
+    }
+
     this.state.filter["date_index"] = date_index;
     this.clearCache();
   }
@@ -478,10 +484,63 @@ class Social {
     return true;
   }
 
+  selectAtStage(){
+    // return the person associated with the current stage
+    let people_at_stages = ["Thomas Guppy",
+                            null,
+                            "W. H. Townsend",
+                            null,
+                            "Isambard Kingdom Brunel",
+                            null,
+                            null,
+                            null,
+                            "Messrs I & J Brown",
+                            null,
+                            null
+                          ];
+
+    let idx = this.state.filter["date_index"];
+
+    let person = people_at_stages[idx];
+
+    if (person === null){
+      return this.selectAtRandom();
+    }
+
+    person = this.getPeople(true).find(person);
+
+    console.log(person);
+
+    if (person === null){
+      console.log(`Could not find ${people_at_stages[idx]}`);
+      return this.selectAtRandom();
+    } else {
+      this.state._displayed_people[person.getID()] = 1;
+      console.log("selectAtStage");
+      console.log(this.state._displayed_people);
+      return person;
+    }
+  }
+
   selectAtRandom(){
     // find someone who has only just been filtered in and who has a biography, and select them
     let people = this.getPeople(true);
-    return people.selectAtRandom(this.getBiographies());
+    let bios = lodash.cloneDeep(this.getBiographies());
+
+    Object.keys(this.state._displayed_people).forEach((key)=>{
+      bios.remove(key);
+    });
+
+    let person = people.selectAtRandom(bios);
+
+    if (person){
+      this.state._displayed_people[person.getID()] = 1;
+    }
+
+    console.log("selectAtRandom");
+    console.log(this.state._displayed_people);
+
+    return person;
   }
 
   getPeople(filtered = true) {
