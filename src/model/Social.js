@@ -67,6 +67,7 @@ class Social {
     this.state.help_text = null;
     this._rebuilding = 0;
     this._displayed_people = {};
+    this._people_at_stages = null;
 
     this._isASocialObject = true;
   }
@@ -484,8 +485,12 @@ class Social {
     return true;
   }
 
-  selectAtStage(){
-    // return the person associated with the current stage
+  _getPeopleAtStages(){
+    console.log(this.state._people_at_stages);
+    if (this.state._people_at_stages){
+      return this.state._people_at_stages;
+    }
+
     let people_at_stages = ["Thomas Guppy",
                             null,
                             "W. H. Townsend",
@@ -499,6 +504,36 @@ class Social {
                             null
                           ];
 
+    this.state._people_at_stages = [];
+
+    people_at_stages.forEach((name) => {
+
+      let person = null;
+
+      if (name !== null){
+        try{
+          person = this.getPeople(false).find(name);
+        } catch(error){}
+
+        if (!person){
+          try{
+            person = this.getBusinesses(false).find(name);
+          } catch(error){}
+        }
+      }
+
+      this.state._people_at_stages.push(person);
+    });
+
+    console.log(this.state._people_at_stages);
+
+    return this.state._people_at_stages;
+  }
+
+  selectAtStage(){
+    // return the person associated with the current stage
+    let people_at_stages = this._getPeopleAtStages();
+
     let idx = this.state.filter["date_index"];
 
     let person = people_at_stages[idx];
@@ -507,19 +542,12 @@ class Social {
       return this.selectAtRandom();
     }
 
-    person = this.getPeople(true).find(person);
-
     console.log(person);
 
-    if (person === null){
-      console.log(`Could not find ${people_at_stages[idx]}`);
-      return this.selectAtRandom();
-    } else {
-      this.state._displayed_people[person.getID()] = 1;
-      console.log("selectAtStage");
-      console.log(this.state._displayed_people);
-      return person;
-    }
+    this.state._displayed_people[person.getID()] = 1;
+    console.log("selectAtStage");
+    console.log(this.state._displayed_people);
+    return person;
   }
 
   selectAtRandom(){
@@ -529,6 +557,14 @@ class Social {
 
     Object.keys(this.state._displayed_people).forEach((key)=>{
       bios.remove(key);
+    });
+
+    this._getPeopleAtStages().forEach((person)=>{
+      if (person){
+        try{
+          bios.remove(person.getID());
+        } catch(error){}
+      }
     });
 
     let person = people.selectAtRandom(bios);
