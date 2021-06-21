@@ -11,6 +11,7 @@ import HowDoIOverlay from "./components/HowDoIOverlay";
 import Overlay from "./components/Overlay";
 import SearchBar from "./components/SearchBar";
 import BioOverlay from "./components/BioOverlay";
+import ImageOverlay from "./components/ImageOverlay";
 import ShipOverlay from "./components/ShipOverlay";
 import SlidingPanel from "./components/SlidingPanel";
 import MainMenu from "./components/MainMenu";
@@ -157,6 +158,17 @@ class SocialApp extends React.Component {
         }}
         social={this.state.social}
         person={item}
+      />
+    );
+  }
+
+  slotShowImage(image){
+    this.setOverlay(
+      <ImageOverlay
+        close={() => {
+          this.closeOverlay();
+        }}
+        image={image}
       />
     );
   }
@@ -567,6 +579,7 @@ class SocialApp extends React.Component {
 
   nextFrame(){
     // find someone to highlight
+    let date_index = this.state.date_index;
     let frame_count = this.state.frame_count;
 
     if (!frame_count){
@@ -575,57 +588,106 @@ class SocialApp extends React.Component {
 
     frame_count += 1;
 
-    if (frame_count == 1){
-      //clear the current selection
-      this.slotClicked(null);
-      this.closeOverlay();
-    } else if (frame_count == 2){
-      // choose someone new to select
-      let social = this.state.social;
-      try{
-        let person = social.selectAtStage();
-        this.slotClicked(person);
-      } catch(error) {
-        console.log(error);
-      }
-    } else if (frame_count == 3){
-      try{
-        let person = this.state.selectedPerson;
-
-        if (person){
-          this.slotReadMore(person);
+    if (date_index === 6 || date_index === 9){
+      console.log(`IN IMAGES ${date_index}`);
+      if (frame_count == 1){
+        //clear the current selection
+        this.slotClicked(null);
+        this.closeOverlay();
+        // choose the image to display
+        try{
+          this.slotShowImage(`images/bios/step${date_index+1}.jpg`);
+        } catch(error){
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
+      } else if (frame_count == 3){
+        this.slotClicked(null);
+        this.closeOverlay();
+      } else if (frame_count == 4){
+        this.slotSetDateIndex(date_index + 1);
+        frame_count = 0;
       }
-    } else if (frame_count == 4){
-      this.slotClicked(null);
-      this.closeOverlay();
-
-      let social = this.state.social;
-      try{
-        let person = social.selectAtRandom();
-        this.slotClicked(person);
-      } catch(error){
-        console.log(error);
-      }
-    } else if (frame_count == 5){
-      try{
-        let person = this.state.selectedPerson;
-
-        if (person){
-          this.slotReadMore(person);
+    } else if (date_index === 7){
+      console.log(`IN 7`);
+      if (frame_count == 1){
+        //clear the current selection
+        this.slotClicked(null);
+        this.closeOverlay();
+        // choose the first image to display
+        try{
+          this.slotShowImage(`images/bios/step8a.jpg`);
+        } catch(error){
+          console.log(error);
         }
-      } catch(error) {
-        console.log(error);
+      } else if (frame_count == 3){
+        // choose the second image to display
+        this.slotClicked(null);
+        this.closeOverlay();
+
+        try{
+          this.slotShowImage(`images/bios/step8b.jpg`);
+        } catch(error){
+          console.log(error);
+        }
+      } else if (frame_count == 5){
+        this.slotClicked(null);
+        this.closeOverlay();
+      } else if (frame_count == 6){
+        this.slotSetDateIndex(date_index + 1);
+        frame_count = 0;
       }
-    } else if (frame_count == 6){
-      this.slotClicked(null);
-      this.closeOverlay();
-    } else if (frame_count == 7){
-      let date_index = this.state.date_index;
-      this.slotSetDateIndex(date_index + 1);
-      frame_count = 0;
+    } else {
+      if (frame_count == 1){
+        //clear the current selection
+        this.slotClicked(null);
+        this.closeOverlay();
+      } else if (frame_count == 2){
+        // choose someone new to select
+        let social = this.state.social;
+        try{
+          let person = social.selectAtStage();
+          this.slotClicked(person);
+        } catch(error) {
+          console.log(error);
+        }
+      } else if (frame_count == 3){
+        try{
+          let person = this.state.selectedPerson;
+
+          if (person){
+            this.slotReadMore(person);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else if (frame_count == 4){
+        this.slotClicked(null);
+        this.closeOverlay();
+
+        let social = this.state.social;
+        try{
+          let person = social.selectAtRandom();
+          this.slotClicked(person);
+        } catch(error){
+          console.log(error);
+        }
+      } else if (frame_count == 5){
+        try{
+          let person = this.state.selectedPerson;
+
+          if (person){
+            this.slotReadMore(person);
+          }
+        } catch(error) {
+          console.log(error);
+        }
+      } else if (frame_count == 6){
+        this.slotClicked(null);
+        this.closeOverlay();
+      } else if (frame_count == 7){
+        this.slotSetDateIndex(date_index + 1);
+        frame_count = 0;
+      }
     }
 
     this.setState({frame_count: frame_count});
@@ -637,11 +699,15 @@ class SocialApp extends React.Component {
       return;
     }
 
+    this.setState({frame_count: 0});
+
     this.interval = setInterval(()=>{this.nextFrame()}, 3000);
   }
 
   slotPause() {
     console.log("PAUSE");
+    this.setState({frame_count: 0});
+
     if (this.interval){
       clearInterval(this.interval);
       this.interval = null;
