@@ -12,6 +12,7 @@ import Overlay from "./components/Overlay";
 import SearchBar from "./components/SearchBar";
 import BioOverlay from "./components/BioOverlay";
 import ImageOverlay from "./components/ImageOverlay";
+import BlankScreen from "./components/BlankScreen";
 import ShipOverlay from "./components/ShipOverlay";
 import SlidingPanel from "./components/SlidingPanel";
 import MainMenu from "./components/MainMenu";
@@ -685,7 +686,15 @@ class SocialApp extends React.Component {
         this.slotClicked(null);
         this.closeOverlay();
       } else if (frame_count == 13){
-        this.slotSetDateIndex(date_index + 1);
+        date_index = this.state.social.getKeyDates().wrapIndex(date_index + 1);
+        this.slotSetDateIndex(date_index);
+
+        if (date_index !== 0){
+          frame_count = 0;
+        } else {
+          this.slotBlankScreen();
+        }
+      } else if (frame_count == 14) {
         frame_count = 0;
       }
     }
@@ -712,6 +721,10 @@ class SocialApp extends React.Component {
       clearInterval(this.interval);
       this.interval = null;
     }
+  }
+
+  slotBlankScreen(){
+    this.setOverlay(<BlankScreen/>);
   }
 
   toggleOverlay() {

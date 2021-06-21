@@ -1,0 +1,36 @@
+.container {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: -20%;
+  top: -20%;
+  opacity: 1;
+  background-color: black;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0px;
+  border-radius: 0px;
+}
+
+.closeButton {
+  height: 100%;
+  align-content: center;
+  vertical-align: center;
+  font-size: 16pt;
+  color: black;
+}
+
+.content {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1px;
+  align-content: stretch;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: black;
+}
+
