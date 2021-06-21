@@ -660,7 +660,7 @@ class SocialApp extends React.Component {
         } catch (error) {
           console.log(error);
         }
-      } else if (frame_count == 4){
+      } else if (frame_count == 7){
         this.slotClicked(null);
         this.closeOverlay();
 
@@ -671,7 +671,7 @@ class SocialApp extends React.Component {
         } catch(error){
           console.log(error);
         }
-      } else if (frame_count == 5){
+      } else if (frame_count == 8){
         try{
           let person = this.state.selectedPerson;
 
@@ -681,10 +681,10 @@ class SocialApp extends React.Component {
         } catch(error) {
           console.log(error);
         }
-      } else if (frame_count == 6){
+      } else if (frame_count == 12){
         this.slotClicked(null);
         this.closeOverlay();
-      } else if (frame_count == 7){
+      } else if (frame_count == 13){
         this.slotSetDateIndex(date_index + 1);
         frame_count = 0;
       }
