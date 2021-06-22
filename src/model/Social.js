@@ -493,9 +493,9 @@ class Social {
 
     let people_at_stages = ["Thomas Guppy",
                             null,
-                            "W. H. Townsend",
-                            null,
                             "Isambard Kingdom Brunel",
+                            null,
+                            null,
                             null,
                             null,
                             null,
