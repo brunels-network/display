@@ -491,38 +491,65 @@ class Social {
       return this.state._people_at_stages;
     }
 
-    let people_at_stages = ["Thomas Guppy",
-                            null,
-                            "Isambard Kingdom Brunel",
-                            null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            "Messrs I & J Brown",
-                            null,
-                            null
+    let people_at_stages = [["Thomas Guppy"],
+                            ["Nicholas Roch"],
+                            ["Isambard Kingdom Brunel"],
+                            ["George H. Gibbs", "Robert Scott"],
+                            ["highlight:Isambard Kingdom Brunel"],
+                            ["John Vining"],
+                            ["image:bios/step7.jpg"],
+                            ["image:bios/step8a.jpg", "image:bios/step8b.jpg"],
+                            ["highlight:Messrs I & J Brown"],
+                            ["image:bios/step10.jpg"],
+                            []
                           ];
 
     this.state._people_at_stages = [];
 
-    people_at_stages.forEach((name) => {
+    people_at_stages.forEach((sequence) => {
 
-      let person = null;
+      let p = [];
 
-      if (name !== null){
-        try{
-          person = this.getPeople(false).find(name);
-        } catch(error){}
-
-        if (!person){
+      sequence.forEach((n) => {
+        if (n.startsWith("image:")){
+          p.push(n.substr(6));
+        } else if (n.startsWith("highlight:")){
+          let person = null;
           try{
-            person = this.getBusinesses(false).find(name);
+            person = this.getPeople(false).find(n.substr(10));
           } catch(error){}
-        }
-      }
 
-      this.state._people_at_stages.push(person);
+          if (!person){
+            try{
+              person = this.getBusinesses(false).find(n.substr(10));
+            } catch(error){}
+          }
+
+          if (person){
+            p.push([person, false]);
+          }
+        } else {
+          let person = null;
+
+          if (n !== null){
+            try{
+              person = this.getPeople(false).find(n);
+            } catch(error){}
+
+            if (!person){
+              try{
+                person = this.getBusinesses(false).find(n);
+              } catch(error){}
+            }
+          }
+
+          if (person){
+            p.push([person, true]);
+          }
+        }
+      });
+
+      this.state._people_at_stages.push(p);
     });
 
     console.log(this.state._people_at_stages);
@@ -531,23 +558,20 @@ class Social {
   }
 
   selectAtStage(){
-    // return the person associated with the current stage
+    // return the items associated with the current stage
     let people_at_stages = this._getPeopleAtStages();
 
     let idx = this.state.filter["date_index"];
 
-    let person = people_at_stages[idx];
+    let items = people_at_stages[idx];
 
-    if (person === null){
-      return this.selectAtRandom();
-    }
+    items.forEach((item) => {
+      try{
+        this.state._displayed_people[item[0].getID()] = 1;
+      } catch(error){}
+    });
 
-    console.log(person);
-
-    this.state._displayed_people[person.getID()] = 1;
-    console.log("selectAtStage");
-    console.log(this.state._displayed_people);
-    return person;
+    return items;
   }
 
   selectAtRandom(){

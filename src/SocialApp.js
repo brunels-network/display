@@ -587,115 +587,61 @@ class SocialApp extends React.Component {
       frame_count = 0;
     }
 
+    let social = this.state.social;
+    let items = social.selectAtStage();
+
     frame_count += 1;
+    let item_index = frame_count - 2;
 
-    if (date_index === 6 || date_index === 9){
-      console.log(`IN IMAGES ${date_index}`);
-      if (frame_count == 1){
-        //clear the current selection
-        this.slotClicked(null);
-        this.closeOverlay();
-        // choose the image to display
-        try{
-          this.slotShowImage(`images/bios/step${date_index+1}.jpg`);
-        } catch(error){
-          console.log(error);
-        }
-      } else if (frame_count == 3){
-        this.slotClicked(null);
-        this.closeOverlay();
-      } else if (frame_count == 4){
-        this.slotSetDateIndex(date_index + 1);
-        frame_count = 0;
-      }
-    } else if (date_index === 7){
-      console.log(`IN 7`);
-      if (frame_count == 1){
-        //clear the current selection
-        this.slotClicked(null);
-        this.closeOverlay();
-        // choose the first image to display
-        try{
-          this.slotShowImage(`images/bios/step8a.jpg`);
-        } catch(error){
-          console.log(error);
-        }
-      } else if (frame_count == 3){
-        // choose the second image to display
-        this.slotClicked(null);
-        this.closeOverlay();
+    console.log(`DATE ${date_index} : FRAME ${frame_count} : ITEM ${item_index} : ${items.length}`);
 
-        try{
-          this.slotShowImage(`images/bios/step8b.jpg`);
-        } catch(error){
-          console.log(error);
-        }
-      } else if (frame_count == 5){
-        this.slotClicked(null);
-        this.closeOverlay();
-      } else if (frame_count == 6){
-        this.slotSetDateIndex(date_index + 1);
+    if (frame_count === 0){
+      // pause after the blank screen
+      console.log("PAUSE AFTER BLANK");
+    } else if (frame_count === 1){
+      // clear the previous frame
+      console.log("START - CLEAR PREVIOUS");
+      this.slotClicked(null);
+      this.closeOverlay();
+    } else if (item_index >= items.length) {
+      // clear the previous frame and advance to the next date index.
+      // Blank the screen if this is the end of the show
+      console.log("END - CLEAR CURRENT");
+      this.slotClicked(null);
+      this.closeOverlay();
+
+      date_index = this.state.social.getKeyDates().wrapIndex(date_index + 1);
+      this.slotSetDateIndex(date_index);
+
+      if (date_index !== 0){
         frame_count = 0;
+      } else {
+        frame_count = -1;
+        console.log("BLANK SCREEN!");
+        this.slotBlankScreen();
       }
     } else {
-      if (frame_count == 1){
-        //clear the current selection
-        this.slotClicked(null);
-        this.closeOverlay();
-      } else if (frame_count == 2){
-        // choose someone new to select
-        let social = this.state.social;
-        try{
-          let person = social.selectAtStage();
-          this.slotClicked(person);
-        } catch(error) {
-          console.log(error);
-        }
-      } else if (frame_count == 3){
-        try{
-          let person = this.state.selectedPerson;
+      let item = items[item_index];
+      console.log(`Highlight ${item}`);
 
-          if (person){
+      if (typeof item === 'string'){
+        console.log("IMAGE!");
+        try{
+          this.slotShowImage(`images/${item}`);
+        } catch(error){}
+      } else {
+        try{
+          let person = item[0];
+          let show_bio = item[1];
+
+          console.log(`PERSON: ${person.getName()} - ${show_bio}`);
+
+          this.slotClicked(person);
+
+          if (show_bio){
             this.slotReadMore(person);
           }
-        } catch (error) {
-          console.log(error);
-        }
-      } else if (frame_count == 7){
-        this.slotClicked(null);
-        this.closeOverlay();
-
-        let social = this.state.social;
-        try{
-          let person = social.selectAtRandom();
-          this.slotClicked(person);
-        } catch(error){
-          console.log(error);
-        }
-      } else if (frame_count == 8){
-        try{
-          let person = this.state.selectedPerson;
-
-          if (person){
-            this.slotReadMore(person);
-          }
-        } catch(error) {
-          console.log(error);
-        }
-      } else if (frame_count == 12){
-        this.slotClicked(null);
-        this.closeOverlay();
-      } else if (frame_count == 13){
-        date_index = this.state.social.getKeyDates().wrapIndex(date_index + 1);
-        this.slotSetDateIndex(date_index);
-
-        if (date_index !== 0){
-          frame_count = 0;
-        } else {
-          this.slotBlankScreen();
-        }
-      } else if (frame_count == 14) {
-        frame_count = 0;
+        } catch(error) {}
       }
     }
 
