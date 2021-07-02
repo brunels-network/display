@@ -486,7 +486,6 @@ class Social {
   }
 
   _getPeopleAtStages(){
-    console.log(this.state._people_at_stages);
     if (this.state._people_at_stages){
       return this.state._people_at_stages;
     }
@@ -552,7 +551,7 @@ class Social {
       this.state._people_at_stages.push(p);
     });
 
-    console.log(this.state._people_at_stages);
+    //console.log(this.state._people_at_stages);
 
     return this.state._people_at_stages;
   }

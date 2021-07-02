@@ -582,41 +582,50 @@ class SocialApp extends React.Component {
     // find someone to highlight
     let date_index = this.state.date_index;
     let frame_count = this.state.frame_count;
+    let item_index = this.state.item_index;
+    let item_frame = this.state.item_frame;
 
     if (!frame_count){
       frame_count = 0;
+    }
+
+    if (!item_index){
+      item_index = 0;
+    }
+
+    if (!item_frame){
+      item_frame = 0;
     }
 
     let social = this.state.social;
     let items = social.selectAtStage();
 
     frame_count += 1;
-    let item_index = frame_count - 2;
 
-    console.log(`DATE ${date_index} : FRAME ${frame_count} : ITEM ${item_index} : ${items.length}`);
+    console.log(`DATE ${date_index} : FRAME ${frame_count} : ITEM ${item_index} : ITEM_FRAME ${item_frame} : ${items.length}`);
 
-    if (frame_count === 0){
+    if (frame_count < 0){
+      // still pausing
+      console.log("Still pausing");
+    } else if (frame_count === 0){
       // pause after the blank screen
       console.log("PAUSE AFTER BLANK");
-    } else if (frame_count === 1){
-      // clear the previous frame
-      console.log("START - CLEAR PREVIOUS");
-      this.slotClicked(null);
+      item_index = 0;
+      item_frame = 0;
       this.closeOverlay();
+      this.slotClicked(null);
     } else if (item_index >= items.length) {
-      // clear the previous frame and advance to the next date index.
       // Blank the screen if this is the end of the show
-      console.log("END - CLEAR CURRENT");
-      this.slotClicked(null);
-      this.closeOverlay();
-
       date_index = this.state.social.getKeyDates().wrapIndex(date_index + 1);
       this.slotSetDateIndex(date_index);
+
+      item_index = 0;
+      item_frame = 0;
 
       if (date_index !== 0){
         frame_count = 0;
       } else {
-        frame_count = -1;
+        frame_count = -3;
         console.log("BLANK SCREEN!");
         this.slotBlankScreen();
       }
@@ -624,28 +633,73 @@ class SocialApp extends React.Component {
       let item = items[item_index];
       console.log(`Highlight ${item}`);
 
+      /*if (item_frame === 0){
+        this.slotClicked(null);
+        this.closeOverlay();
+      }*/
+
       if (typeof item === 'string'){
-        console.log("IMAGE!");
-        try{
-          this.slotShowImage(`images/${item}`);
-        } catch(error){}
+
+        if (item_frame === 0){
+          console.log("IMAGE!");
+          try{
+            this.slotShowImage(`images/${item}`);
+          } catch(error){}
+        }
+
+        if (item_frame >= 2) {
+          item_index += 1;
+          item_frame = 0;
+
+          if (item_index >= items.length){
+            this.slotClicked(null);
+            this.closeOverlay();
+          } else {
+            try{
+              this.slotShowImage(`images/${item}`);
+            } catch(error){}
+          }
+        } else {
+          item_frame += 1;
+        }
+
       } else {
         try{
           let person = item[0];
           let show_bio = item[1];
-
           console.log(`PERSON: ${person.getName()} - ${show_bio}`);
 
-          this.slotClicked(person);
-
-          if (show_bio){
-            this.slotReadMore(person);
+          if (item_frame === 0){
+            this.slotClicked(person);
+            item_frame += 1;
+          } else {
+            if (show_bio){
+              if (item_frame === 1){
+                this.slotReadMore(person);
+                item_frame += 1;
+              } else if (item_frame > 4) {
+                this.closeOverlay();
+                item_index += 1;
+                item_frame = 0;
+              } else {
+                item_frame += 1;
+              }
+            } else {
+              if (item_frame > 2){
+                item_index += 1;
+                item_frame = 0;
+              } else {
+                item_frame += 1;
+              }
+            }
           }
         } catch(error) {}
       }
     }
 
-    this.setState({frame_count: frame_count});
+    this.setState({frame_count: frame_count,
+                   item_index: item_index,
+                   item_frame: item_frame});
   }
 
   slotPlay() {
@@ -654,7 +708,9 @@ class SocialApp extends React.Component {
       return;
     }
 
-    this.setState({frame_count: 0});
+    this.setState({frame_count: 0,
+                   item_index: 0,
+                   item_frame: 0});
 
     this.interval = setInterval(()=>{this.nextFrame()}, 3000);
   }
