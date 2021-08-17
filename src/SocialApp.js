@@ -83,6 +83,7 @@ class SocialApp extends React.Component {
       width: 0,
       date_index: 0,
       warningVisible: true,
+      firstload: true,
     };
 
 
@@ -738,6 +739,11 @@ class SocialApp extends React.Component {
   }
 
   render() {
+
+    if (this.state.firstload){
+      this.slotPlay();
+      this.setState({firstload: false});
+    }
 
     let graph = (
       <ForceGraph
