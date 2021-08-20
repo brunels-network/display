@@ -479,6 +479,8 @@ class ForceGraphD3 extends React.Component {
 
     let graph = this._graph;
 
+    let last_update = new Date();
+
     let simulation = d3
       .forceSimulation(graph.nodes)
       .alpha(0.05)
@@ -501,6 +503,16 @@ class ForceGraphD3 extends React.Component {
       )*/
       // This function with help from https://stackoverflow.com/a/13456081
       .on("tick", () => {
+
+        let now = new Date();
+
+        let delta = now - last_update;
+
+        if (delta < 50){
+          return;
+        }
+
+        last_update = now;
 
         this._link.attr("d", (d) => {
           if (d.target.x === undefined || d.source.x === undefined) {
@@ -555,7 +567,6 @@ class ForceGraphD3 extends React.Component {
 
       })
       .on("end", () => {
-        console.log("END");
       });
 
     this._is_running = true;

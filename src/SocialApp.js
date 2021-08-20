@@ -96,8 +96,6 @@ class SocialApp extends React.Component {
       console.log(error);
     }
 
-    console.log(social);
-
     const gwr = social.getProjects().getByName("GWR");
 
     // make sure that we start showing only the Great Western
@@ -141,7 +139,6 @@ class SocialApp extends React.Component {
       height: window.innerHeight,
     });
 
-    console.log(`WINDOW ${this.state.width}x${this.state.height}`);
   }
 
   slotSetAnchor(item) {
@@ -603,14 +600,10 @@ class SocialApp extends React.Component {
 
     frame_count += 1;
 
-    console.log(`DATE ${date_index} : FRAME ${frame_count} : ITEM ${item_index} : ITEM_FRAME ${item_frame} : ${items.length}`);
-
     if (frame_count < 0){
       // still pausing
-      console.log("Still pausing");
     } else if (frame_count === 0){
       // pause after the blank screen
-      console.log("PAUSE AFTER BLANK");
       item_index = 0;
       item_frame = 0;
       this.closeOverlay();
@@ -627,12 +620,10 @@ class SocialApp extends React.Component {
         frame_count = 0;
       } else {
         frame_count = -3;
-        console.log("BLANK SCREEN!");
         this.slotBlankScreen();
       }
     } else {
       let item = items[item_index];
-      console.log(`Highlight ${item}`);
 
       /*if (item_frame === 0){
         this.slotClicked(null);
@@ -642,7 +633,6 @@ class SocialApp extends React.Component {
       if (typeof item === 'string'){
 
         if (item_frame === 0){
-          console.log("IMAGE!");
           try{
             this.slotShowImage(`images/${item}`);
           } catch(error){}
@@ -668,7 +658,6 @@ class SocialApp extends React.Component {
         try{
           let person = item[0];
           let show_bio = item[1];
-          console.log(`PERSON: ${person.getName()} - ${show_bio}`);
 
           if (item_frame === 0){
             this.slotClicked(person);
@@ -704,7 +693,6 @@ class SocialApp extends React.Component {
   }
 
   slotPlay() {
-    console.log("PLAY");
     if (this.interval){
       return;
     }
@@ -717,7 +705,6 @@ class SocialApp extends React.Component {
   }
 
   slotPause() {
-    console.log("PAUSE");
     this.setState({frame_count: 0});
 
     if (this.interval){
