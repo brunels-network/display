@@ -398,7 +398,7 @@ class ForceGraphD3 extends React.Component {
         }
       })
       .attr("dx", (d) => {
-        return -2 * d.radius + "px";
+        return (0.2*d.radius) + "px";
       })
       .attr("dy", (d) => {
         return -1 * (3 + sizeScale * d.radius) + "px";

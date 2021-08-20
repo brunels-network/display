@@ -498,7 +498,7 @@ class Social {
                             ["John Vining"],
                             ["image:bios/ES1.jpg"],
                             ["image:bios/ES2.jpg", "image:bios/ES3.jpg"],
-                            ["highlight:Messrs I & J Brown", "image/bios/ES4.jpg"],
+                            ["highlight:Messrs I & J Brown", "image:bios/ES4.jpg"],
                             [],
                             ["image:bios/ES5.jpg", "image:bios/ES6.jpg"]
                           ];

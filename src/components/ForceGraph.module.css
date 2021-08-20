@@ -5,7 +5,7 @@
 }
 
 .uob_logo_image {
-    max-width: 200px;
+    max-width: 300px;
 }
 
 .qr_logo_image {
@@ -13,7 +13,7 @@
 }
 
 .bi_logo_image {
-    max-width: 110px;
+    max-width: 250px;
 }
 
 .qr_logo {
@@ -25,15 +25,15 @@
 
 .right_logo {
     position: absolute;
-    bottom: 5px;
-    right: 10px;
+    bottom: 25px;
+    right: 20px;
     z-index: 0;
 }
 
 .left_logo {
     position: absolute;
-    bottom: 15px;
-    left: 10px;
+    bottom: 65px;
+    left: 50px;
     z-index: 0;
 }
 

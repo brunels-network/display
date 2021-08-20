@@ -2,17 +2,17 @@
 .box {
     text-align: center;
     color: white;
-    max-width: 95%;
+    max-width: 60%;
     margin: auto;
     background-color: black;
-    height: 75px;
+    height: 145px;
 }
 
 .textbox {
     padding: 5px;
     color: white;
     font-family: "Domine";
-    font-size: 12pt;
+    font-size: 16pt;
     background-color: black;
     height: 100%;
 }
@@ -28,6 +28,6 @@
 
 @media only screen and (min-width: 1200px) {
     .textbox {
-      font-size: 14pt;
+      font-size: 22pt;
     }
   }
