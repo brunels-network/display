@@ -5,15 +5,15 @@
 }
 
 .uob_logo_image {
-    max-width: 85px;
+    max-width: 200px;
 }
 
 .qr_logo_image {
-    max-width: 85px;
+    max-width: 128px;
 }
 
 .bi_logo_image {
-    max-width: 75px;
+    max-width: 110px;
 }
 
 .qr_logo {
@@ -45,7 +45,7 @@
 .node {
     stroke: #373935;
     fill: #998554;
-    stroke-width: 1px;
+    stroke-width: 2px;
 }
 
 .node_highlighted {
@@ -57,7 +57,7 @@
 .node_bristol {
     stroke: #373935;
     fill: #E63309;
-    stroke-width: 1px;
+    stroke-width: 2px;
 }
 
 .node_bristol_highlighted {
@@ -69,7 +69,7 @@
 .node_bath {
     stroke: #0b004d;
     fill:  #1e00c7;
-    stroke-width: 1px;
+    stroke-width: 2px;
 }
 
 .node_bath_highlighted {
@@ -81,7 +81,7 @@
 .node_london {
     fill: #0d3f00;
     stroke: #003100;
-    stroke-width: 1px;
+    stroke-width: 2px;
 }
 
 .node_london_highlighted {
@@ -93,28 +93,28 @@
 .node_selected {
     fill: #000000;
     stroke: #f85a36;
-    stroke-width: 2px;
+    stroke-width: 3px;
 }
 
 .link {
     /* Was white */
     stroke: #456991;
     stroke-width: 1px;
-    stroke-opacity: 60%;
+    stroke-opacity: 100%;
     fill: none;
 }
 
 .linkWeak {
     stroke: #324f6e;
     stroke-width: 1px;
-    stroke-opacity: 20%;
+    stroke-opacity: 100%;
     fill: none;
 }
 
 .linkIndirect {
     stroke: #b4b0b0;
-    stroke-width: 1px;
-    stroke-opacity: 50%;
+    stroke-width: 2px;
+    stroke-opacity: 100%;
     fill: none;
 }
 
@@ -125,15 +125,15 @@
 
 .linkWeak.highlight {
     stroke: #E63309;
-    stroke-width: 1px;
-    stroke-opacity: 50%;
+    stroke-width: 2px;
+    stroke-opacity: 100%;
     fill: none;
 }
 
 .linkIndirect.highlight {
     stroke: #E63309;
-    stroke-width: 1px;
-    stroke-opacity: 50%;
+    stroke-width: 2px;
+    stroke-opacity: 100%;
     fill: none;
 }
 
@@ -146,7 +146,7 @@
 
 .node_text {
     fill: #ccb885;
-    font-size: 8pt;
+    font-size: 14pt;
     text-shadow: 2px 2px #000000;
     stroke-width: 0;
 }
@@ -155,7 +155,7 @@
     fill: #FFFFFF;
     stroke-width: 0;
     text-shadow: 2px 2px #000000;
-    font-size: 10pt;
+    font-size: 16pt;
     font-weight: 900;
 }
 
@@ -163,7 +163,7 @@
     fill: #ffffff;
     text-shadow: 2px 2px #000000;
     stroke-width: 0;
-    font-size: 12pt;
+    font-size: 22pt;
     font-style: italic;
     font-weight: 900;
 }
