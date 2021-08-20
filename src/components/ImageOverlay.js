@@ -3,8 +3,6 @@ import React from "react";
 
 import "react-tabs/style/react-tabs.css";
 
-import BigBox from "./BigBox";
-
 import styles from "./ImageOverlay.module.css";
 
 function ImageOverlay(props) {

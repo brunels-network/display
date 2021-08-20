@@ -496,11 +496,11 @@ class Social {
                             ["George H. Gibbs", "Robert Scott"],
                             ["highlight:Isambard Kingdom Brunel"],
                             ["John Vining"],
-                            ["image:bios/step7.jpg"],
-                            ["image:bios/step8a.jpg", "image:bios/step8b.jpg"],
-                            ["highlight:Messrs I & J Brown"],
-                            ["image:bios/step10.jpg"],
-                            []
+                            ["image:bios/ES1.jpg"],
+                            ["image:bios/ES2.jpg", "image:bios/ES3.jpg"],
+                            ["highlight:Messrs I & J Brown", "image/bios/ES4.jpg"],
+                            [],
+                            ["image:bios/ES5.jpg", "image:bios/ES6.jpg"]
                           ];
 
     this.state._people_at_stages = [];
