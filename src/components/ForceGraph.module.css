@@ -167,3 +167,30 @@
     font-style: italic;
     font-weight: 900;
 }
+
+@media only screen and (max-width: 1600px) {
+    .node_text {
+      font-size: 8pt;
+    }
+
+    .node_text_highlight {
+      font-size: 8pt;
+    }
+
+    .node_text_select {
+      font-size: 8pt;
+    }
+
+    .uob_logo_image {
+        max-width: 150px;
+    }
+
+    .qr_logo_image {
+        max-width: 64px;
+    }
+
+    .bi_logo_image {
+        max-width: 125px;
+    }
+}
+

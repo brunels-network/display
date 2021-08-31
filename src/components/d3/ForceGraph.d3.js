@@ -121,8 +121,6 @@ class ForceGraphD3 extends React.Component {
       //save the cached graph
       this.state.graph = new_graph;
 
-      console.log("GRAPH CHANGED!");
-
       // This view needs to clone its own copy of the graph, as
       // D3 will update the graph object. We need to clone in case
       // two ForceGraph.d3 views are viewing the same Social graph
@@ -173,7 +171,6 @@ class ForceGraphD3 extends React.Component {
             new_node.vx = old_node.vx;
             new_node.vy = old_node.vy;
             found = true;
-            console.log("FOUND!");
             break;
           }
         }
@@ -235,10 +232,7 @@ class ForceGraphD3 extends React.Component {
 
     let hasSocial = Object.prototype.hasOwnProperty.call(props, "social");
 
-    console.log("UPDATE");
-
     if (hasSocial) {
-      console.log("UPDATE SOCIAL");
       this.updateGraph(props.social);
     }
   }
