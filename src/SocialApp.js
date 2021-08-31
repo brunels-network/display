@@ -32,18 +32,12 @@ import graphData from "./socialNetwork.json";
 import positionGroups from "./data/positionGroups.json";
 import imageData from "./images.json";
 
-import gw_text from "./gw_text.md";
-import gb_text from "./gb_text.md";
-import ge_text from "./ge_text.md";
-import help_text from "./help_text.md";
-
 // Styling for the app
 import styles from "./SocialApp.module.css";
 
 import { score_by_connections, score_by_influence } from "./model/ScoringFunctions";
 
 import { size_by_connections, size_by_influence, size_by_weight } from "./model/SizingFunctions";
-import { faRulerHorizontal } from "@fortawesome/free-solid-svg-icons";
 
 class SocialApp extends React.Component {
   constructor(props) {

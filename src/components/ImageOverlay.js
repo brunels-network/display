@@ -10,12 +10,8 @@ function ImageOverlay(props) {
 
   return (
     <div className={styles.container} onClick={props.close}>
-      <div className={styles.content}>
-        <div>
-          <img className={styles.image}
-               src={require(`../${filename}`)} alt="A document" />
-        </div>
-      </div>
+      <img className={styles.image}
+           src={require(`../${filename}`)} alt="A document" />
     </div>
   );
 }

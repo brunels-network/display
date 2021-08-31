@@ -5,7 +5,7 @@ import styles from "./PlayPause.module.css";
 class PlayPause extends React.Component {
   constructor(props){
     super(props);
-    this.state = {isActive: false,
+    this.state = {isActive: true,
                   signalPlay: props.signalPlay,
                   signalPause: props.signalPause};
   }
