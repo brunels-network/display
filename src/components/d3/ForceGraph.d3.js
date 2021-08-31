@@ -121,6 +121,8 @@ class ForceGraphD3 extends React.Component {
       //save the cached graph
       this.state.graph = new_graph;
 
+      console.log("GRAPH CHANGED!");
+
       // This view needs to clone its own copy of the graph, as
       // D3 will update the graph object. We need to clone in case
       // two ForceGraph.d3 views are viewing the same Social graph
@@ -155,6 +157,7 @@ class ForceGraphD3 extends React.Component {
       let old_graph = this._graph;
 
       if (!old_graph) {
+        console.log("NO OLD GRAPH!");
         old_graph = { nodes: [] };
       }
 
@@ -170,6 +173,7 @@ class ForceGraphD3 extends React.Component {
             new_node.vx = old_node.vx;
             new_node.vy = old_node.vy;
             found = true;
+            console.log("FOUND!");
             break;
           }
         }
@@ -231,7 +235,10 @@ class ForceGraphD3 extends React.Component {
 
     let hasSocial = Object.prototype.hasOwnProperty.call(props, "social");
 
+    console.log("UPDATE");
+
     if (hasSocial) {
+      console.log("UPDATE SOCIAL");
       this.updateGraph(props.social);
     }
   }
@@ -274,6 +281,12 @@ class ForceGraphD3 extends React.Component {
       .join(
         (enter) => enter.append("circle")
       )
+      .attr("cx", (d) => {
+        return d.x;
+      })
+      .attr("cy", (d) => {
+        return d.y;
+      })
       // Here size is the weight given to that entity
       .attr("r", (d) => {
         d.radius = 1.2 * d.size; //Math.min(15, 5 + (0.5 * (d.size * d.size)));
@@ -397,6 +410,33 @@ class ForceGraphD3 extends React.Component {
           return `node_text ${styles.node_text}`;
         }
       })
+      .attr("x", (d) => {
+        if (!d.textSize) {
+          d.textSize = getTextSize(d);
+        }
+
+        let width = d.textSize[0];
+        let delta = 0.5 * width;
+
+        if (d.x + delta > window.innerWidth) {
+          return window.innerWidth - width - 20;
+        }
+        else if (d.x - delta < 5) {
+          return 5;
+        }
+        else {
+          return d.x - d.radius - delta;
+        }
+      })
+      .attr("y", (d) => {
+        if (!d.textSize) {
+          d.textSize = getTextSize(d);
+        }
+
+        let height = d.textSize[1];
+
+        return d.y + (0.55 * (height + d.radius));
+      })
       .attr("dx", (d) => {
         return (0.2*d.radius) + "px";
       })
@@ -453,6 +493,19 @@ class ForceGraphD3 extends React.Component {
             return `link ${styles.link}`;
           }
         }
+      })
+      .attr("d", (d) => {
+        if (d.target.x === undefined || d.source.x === undefined) {
+          return null;
+        }
+
+        // The smaller the curve factor the greater the curve
+        const curveFactor = 2;
+        const dx = d.target.x - d.source.x;
+        const dy = d.target.y - d.source.x;
+        const dr = curveFactor * Math.sqrt(dx * dx + dy * dy);
+
+        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
       })
       .attr("id", (d) => {
         return d.id;
