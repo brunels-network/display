@@ -661,7 +661,7 @@ class SocialApp extends React.Component {
               if (item_frame === 1){
                 this.slotReadMore(person);
                 item_frame += 1;
-              } else if (item_frame > 4) {
+              } else if (item_frame > 2) {
                 this.closeOverlay();
                 item_index += 1;
                 item_frame = 0;
@@ -695,7 +695,7 @@ class SocialApp extends React.Component {
                    item_index: 0,
                    item_frame: 0});
 
-    this.interval = setInterval(()=>{this.nextFrame()}, 3000);
+    this.interval = setInterval(()=>{this.nextFrame()}, 5000);
   }
 
   slotPause() {
