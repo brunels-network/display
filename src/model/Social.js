@@ -490,17 +490,19 @@ class Social {
       return this.state._people_at_stages;
     }
 
-    let people_at_stages = [["Thomas Guppy"],
+    let people_at_stages = [[],
+                            ["Thomas Guppy", "image:bios/GUPPY.jpg"],
                             ["Nicholas Roch"],
-                            ["Isambard Kingdom Brunel"],
-                            ["George H. Gibbs", "Robert Scott"],
+                            ["Isambard Kingdom Brunel", "image:bios/BRUNEL.jpg"],
+                            ["George H. Gibbs", "images:bios/GIBBS.jpg"],
                             ["highlight:Isambard Kingdom Brunel"],
-                            ["John Vining"],
+                            ["Robert Scott"],
                             ["image:bios/ES1.jpg"],
                             ["image:bios/ES2.jpg", "image:bios/ES3.jpg"],
                             ["highlight:Messrs I & J Brown", "image:bios/ES4.jpg"],
                             [],
-                            ["image:bios/ES5.jpg", "image:bios/ES6.jpg"]
+                            ["image:bios/ES5.jpg", "image:bios/ES6.jpg"],
+                            []
                           ];
 
     this.state._people_at_stages = [];
