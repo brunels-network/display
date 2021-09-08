@@ -613,7 +613,7 @@ class SocialApp extends React.Component {
       if (date_index !== 0){
         frame_count = 0;
       } else {
-        frame_count = -3;
+        frame_count = -2;
         this.slotBlankScreen();
       }
     } else {
@@ -669,7 +669,7 @@ class SocialApp extends React.Component {
                 item_frame += 1;
               }
             } else {
-              if (item_frame > 2){
+              if (item_frame > 1){
                 item_index += 1;
                 item_frame = 0;
               } else {
