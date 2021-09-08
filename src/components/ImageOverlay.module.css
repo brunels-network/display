@@ -24,11 +24,22 @@
 }
 
 .image {
-  height: 80%;
+  height: 75%;
+  max-width: 95%;
   display: block;
   margin-left: auto;
   margin-right: auto;
   margin-top: 2px;
   margin-bottom: 2px;
   border-radius: 1px;
+}
+
+.credits {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  border-radius: 1px;
+  color: white;
 }
