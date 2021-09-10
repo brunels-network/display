@@ -91,19 +91,20 @@ function BioOverlay(props) {
   let credits = null;
 
   if (name.search("Isambard Kingdom Brunel") !== -1){
-    image = "../images/bios/BRUNEL.jpg";
+    image = <img src={require("../images/bios/BRUNEL.jpg")} className={styles.bio_image}
+                 alt={`Image of ${name}`}/>;
     credits = "Isambard Kingdom Brunel - engraved by D. J. Pound [Brunel Institute BRSGB-2014.03578 from a photograph by Mayall, Accepted under the Cultural Gifts Scheme by HM Government from Clive Richards OBE DL  and allocated to the SS Great Britain Trust, 2017]";
   } else if (name.search("Thomas Guppy") !== -1){
-    image = "../bios/GUPPY.jpg";
+    image = <img src={require("../images/bios/GUPPY.jpg")} className={styles.bio_image}
+                 alt={`Image of ${name}`}/>;
     credits = "Thomas Guppy [Brunel Institute DM157 Short History of the SS Great Western/1938/Bristol Port Authority]";
   } else if (name.search("George H. Gibbs") !== -1){
-    image = "../bios/GIBBS.jpg";
+    image = <img src={require("../images/bios/GIBBS.jpg")} className={styles.bio_image}
+                 alt={`Image of ${name}`}/>;
     credits = "George Henry Gibbs, copy of Miniature in the Possession of Anthony Gibbs & Sons Ltd, reproduced in Jack Simmons, The Birth of the Great Western Railway Bath, 1971.";
   }
 
   if (image){
-    image = <img src={require(image)} className={styles.bio_image}
-                 alt={`Image of ${name}`}/>;
     credits = <div className={styles.bio_credits}>{credits}</div>;
   }
 
@@ -111,15 +112,15 @@ function BioOverlay(props) {
     <div className={styles.container} onClick={props.close}>
       <div>
         <div>
-            <BigBox><div className={styles.name}>{name}</div></BigBox>
+            <div className={styles.name}>{name}</div>
         </div>
       </div>
       <div className={styles.content}>
-        <div>
-          <div className={styles.bio}>{bio}</div>
+        <div className={styles.bio}>{bio}</div>
+        <div className={styles.image}>
+          {image}
+          {credits}
         </div>
-        {image}
-        {credits}
       </div>
     </div>
   );

@@ -53,8 +53,8 @@
   box-sizing: border-box;
   padding: 20px;
   align-content: stretch;
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: hidden;
   background-color: white;
   margin-left: auto;
   margin-right: auto;
@@ -62,6 +62,25 @@
   margin-bottom: 2px;
   max-width: 80%;
   border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.image {
+  max-width: 300px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  align-content: stretch;
+}
+
+.bio_image {
+  width: 100%;
+}
+
+.bio_credits {
+  margin-top: 10px;
+  font-size: 6pt;
+  text-align: center;
 }
 
 .panel {}
