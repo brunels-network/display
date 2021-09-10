@@ -490,12 +490,12 @@ class Social {
       return this.state._people_at_stages;
     }
 
-    let people_at_stages = [[],
-                            ["Thomas Guppy", "image:bios/GUPPY.jpg"],
+    let people_at_stages = [["image:bios/ES0.jpg"],
+                            ["Thomas Guppy"],
                             ["Nicholas Roch"],
-                            ["Isambard Kingdom Brunel", "image:bios/BRUNEL.jpg"],
-                            ["George H. Gibbs", "images:bios/GIBBS.jpg"],
-                            ["highlight:Isambard Kingdom Brunel"],
+                            ["Isambard Kingdom Brunel"],
+                            ["George H. Gibbs"],
+                            [],
                             ["Robert Scott"],
                             ["image:bios/ES1.jpg"],
                             ["image:bios/ES2.jpg", "image:bios/ES3.jpg"],
