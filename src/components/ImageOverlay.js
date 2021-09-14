@@ -28,7 +28,7 @@ function ImageOverlay(props) {
   } else if (filename.search("ES5.jpg") !== -1){
     credits = "South Eastern View of the Great Western Railway Terminus, 1842, Bristol Reference Library, reproduced in John Binding Brunel's Bristol Temple Meads Oxford, 2001.";
   } else if (filename.search("ES6.jpg") !== -1){
-    credits = "Photograph by SS Great Britain Trust";
+    credits = "SS Great Britain Trust";
   }
 
   console.log(`../${filename}`);
